@@ -39,6 +39,7 @@ export class Auth {
     }
 
     async getCurrentUser(): Promise<User> {
+        console.log("Hello");
         if (!this.token) {
             throw new Error('No token available. Please login first.');
         }
@@ -50,7 +51,8 @@ export class Auth {
                     'Authorization': `Bearer ${this.token}`
                 }
             });
-            return formatUser(res.json());
+            const data = await res.json();
+            return formatUser(data);
         } catch (error: any) {
             throw new Error(`Error fetching current user: ${error.message}`);
         }
@@ -79,3 +81,29 @@ export class Auth {
         }
     }
 }
+
+/*
+
+  const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const getUserInfo = async () => {
+    try {
+      setLoading(true);
+      const auth = new Auth();
+      const loginResponse = await auth.loginUser("kminchelle", "0lelplR");
+      if (loginResponse.success) {
+        const currentUser = await auth.getCurrentUser();
+        setUser(currentUser);
+      } else {
+        setError("Login failed: " + loginResponse.response);
+      }
+    } catch (error: any) {
+      setError("Error: " + error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+*/

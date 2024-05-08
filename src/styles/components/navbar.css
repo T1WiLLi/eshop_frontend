@@ -1,0 +1,178 @@
+.navbar{
+    position: fixed;
+    width: 100%;
+    padding: 15px 0;
+    background-color: transparent;
+    z-index: 5;
+    transition: all ease 0.4s;
+    font-family: var(--title-font);
+}
+
+.navbar.sticky {
+    padding: 0;
+    background: var(--normalize-color);
+}
+
+.navbar .container-fluid{
+    width: 1300px;
+    max-width: 1300px;
+    padding: 0 4rem;
+    display: flex;
+    justify-content: center;
+}
+
+.navbar .navbar-nav{
+    display: flex;
+    gap: 1.5rem;
+}
+
+.navbar .navbar-brand{
+    color: #fff;
+    font-size: 2.5em;
+    font-weight: 700;
+}
+
+.navbar .navbar-brand span{
+    color: var(--normalize-color);
+}
+
+.navbar.sticky .navbar-brand {
+    color: #fff;
+}
+
+.span-sticky{
+    color: #fff!important;
+}
+
+.navbar .navbar-nav li {
+    list-style: none;
+    height: min-content;
+}
+
+.navbar .navbar-nav li a {
+    position: relative;
+    display: inline-block;
+    color: #fff;
+    font-size: 1.2em;
+    font-weight: 500;
+    padding: 4px!important;
+    transition: all ease-in-out 0.2s;
+}
+
+.navbar .navbar-nav li a.scroll {
+    color: #fff;
+}
+
+.navbar .navbar-nav li a:hover {
+    color: var(--normalize-color);
+}
+
+.navbar .navbar-nav li a.scroll::after{
+    content: '';
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 3px;
+    bottom: 0;
+    left: 0;
+    background-color: #fff;
+    transform-origin: bottom right;
+    transition: transform 0.4s ease-out;
+}
+
+.navbar .navbar-nav li a.scroll:hover::after{
+    transform: scale(1);
+    transform-origin: bottom left;
+}
+
+.navbar .navbar-nav li:last-child a.scroll::after{
+    display: none!important;
+}
+
+.navbar .navbar-nav li a.scroll:hover {
+    color: #fff;
+}
+
+@media screen and (max-width: 1100px){
+    .navbar .container-fluid{
+        justify-content: space-between!important;
+        padding: 0 1rem;
+    }
+    .navbar-nav{
+        gap: 1rem!important;
+    }
+
+    .navbar-brand {
+        font-size: 2em!important;
+    }
+
+    @media screen and (max-width: 425px) {
+        .navbar-brand {
+            font-size: 1.5em!important;
+        }
+    }
+}
+
+/* Navbar toggler */
+
+.navbar-toggler {
+    border: 0 !important;
+    margin-right: 10px !important;
+}
+
+.navbar-toggler:focus,
+.navbar-toggler:active,
+.navbar-toggler-icon:focus {
+    outline: none !important;
+    box-shadow: none !important;
+    border: 0 !important;
+}
+
+.toggler-icon {
+    width: 30px;
+    height: 3px;
+    background-color: var(--normalize-color);
+    display: block;
+    transition: all 0.2s;
+    margin: 5px 0 !important;
+}
+
+.middle-bar {
+    margin: 5px auto;
+    background-color: #999;
+}
+
+.navbar-toggler .top-bar {
+    transform: rotate(45deg);
+    transform-origin: 10% 10%;
+    background: var(--normalize-color)!important;
+}
+
+.navbar-toggler .middle-bar {
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
+
+.navbar-toggler .bottom-bar {
+    transform: rotate(-45deg);
+    transform-origin: 10% 90%;
+    background: var(--normalize-color)!important;
+}
+
+.navbar-toggler.collapsed .top-bar {
+    transform: rotate(0);
+}
+
+.navbar-toggler.collapsed .middle-bar {
+    opacity: 1;
+    filter: alpha(opacity=100);
+}
+
+.navbar-toggler.collapsed .bottom-bar {
+    transform: rotate(0);
+}
+
+.toggle-on:nth-child(1),
+.toggle-on:nth-child(3) {
+    background: #fff!important;
+}
