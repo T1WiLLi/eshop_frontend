@@ -6,21 +6,7 @@
     font-weight: 400;
     text-rendering: optimizeLegibility;
     --title-font: "Raleway", sans-serif;
-}
 
-[data-theme="light"] {
-    --bg-color: #fff;
-    --text-color: #222;
-    --card-bg-color: #d5d5d5;
-    --card-text-color: #fff;
-    --card-shadow: 0 0px 0px rgba(0, 0, 0, 0.1);
-
-    --blue-accent: #094074;
-    --orange-accent: #FE9000;
-    --normalize-color: #5ADBFF;
-}
-
-[data-theme="dark"] {
     --bg-color: #222;
     --text-color: #fff;
     --card-bg-color: #fff;
@@ -68,6 +54,7 @@ body {
     line-height: 1.5;
     background-color: var(--bg-color)!important;
     font-family: Raleway, sans-serif;
+    height: 200vh;
 }
 
 a:not([class]) {

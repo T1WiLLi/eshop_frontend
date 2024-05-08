@@ -24,12 +24,26 @@ export class Fetcher {
 
     async fetchAllProduct(): Promise<Product[]> {
         try {
-            const res = await fetch(`${this.apiUrl}products`);
+            const res = await fetch(`${this.apiUrl}products?limit=0`);
             if (!res.ok) {
                 throw new Error('Failed to fetch product data');
             }
-            const productsData = await res.json();
+            const rawData = await res.json();
+            const productsData = rawData.products;
             return productsData.map((productsData: any) => formatProduct(productsData));
+        } catch (error: any) {
+            throw new Error(`Error fetching product data: ${error.message}`);
+        }
+    }
+
+    async fetchProductFromId(id: number): Promise<Product> {
+        try {
+            const res = await fetch(`${this.apiUrl}products/${id}`);
+            if (!res.ok) {
+                throw new Error('Failed to fetch product data');
+            }
+            const productData = await res.json();
+            return formatProduct(productData);
         } catch (error: any) {
             throw new Error(`Error fetching product data: ${error.message}`);
         }

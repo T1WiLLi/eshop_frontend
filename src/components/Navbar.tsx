@@ -1,7 +1,12 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { Container, Nav, Navbar } from "react-bootstrap";
 import "../styles/components/navbar.css";
+import { User } from "../interface/user";
+import Basket from "./Basket";
 
-function Navbar() {
+
+function NavbarComponent() {
+    const [currentUser, setUser] = useState<User | null>(null);
 
     useEffect(() => {
         new ScrollHandler();
@@ -9,10 +14,10 @@ function Navbar() {
 
     return (
         <nav className="navbar navbar-expand-lg" data-bs-theme="dark">
-            <div className="container-fluid">
-                <a className="navbar-brand" href="index.html">
-                    WeSoft<span id="span_lio">Qc</span>
-                </a>
+            <Container className="container-fluid">
+                <Navbar.Brand className="navbar-brand" href="#home">
+                    eShop<span id="span_lio">Qc</span>
+                </Navbar.Brand>
                 <button className="navbar-toggler collapsed" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                     aria-label="Toggle navigation">
@@ -21,25 +26,14 @@ function Navbar() {
                     <span className="toggler-icon bottom-bar"></span>
                 </button>
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul className="navbar-nav ms-auto mb-1 mb-lg-0 align-content-center">
-                        <li className="nav-item">
-                            <a className="nav-link" target="_self" href="#">Home</a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" target="_self" href="#games">Games</a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" target="_self" href="#team">Team</a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" target="_self" href="#investor">Investors</a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" target="_self" href="#careers">Careers</a>
-                        </li>
-                    </ul>
+                    <Nav className="navbar-nav ms-auto mb-1 mb-lg-0 align-content-left">
+                        <Nav.Link className="nav-link" href="#home">Home</Nav.Link>
+                        <Nav.Link className="nav-link" href="#games">Search</Nav.Link>
+                        <Nav.Link className="nav-link" href="#checkout"><Basket /></Nav.Link>
+                        <Nav.Link data-log={currentUser?.firstName + " " + currentUser?.lastName} className="nav-link" href="#investor">Login</Nav.Link>
+                    </Nav>
                 </div>
-            </div>
+            </Container>
         </nav>
     );
 }
@@ -70,4 +64,4 @@ class ScrollHandler {
     }
 }
 
-export default Navbar;
+export default NavbarComponent;

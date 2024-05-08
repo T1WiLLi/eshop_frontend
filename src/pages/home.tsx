@@ -1,9 +1,12 @@
-import Navbar from "../components/Navbar";
+import NavbarComponent from "../components/Navbar";
+import ProductList from "../test/ProductList";
+
 
 function Home() {
     return (
         <>
-            <Navbar />
+            <NavbarComponent />
+            <ProductList />
         </>
     )
 }
