@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import { Container, Nav, Navbar } from "react-bootstrap";
+import { Container, Nav } from "react-bootstrap";
 import "../styles/components/navbar.css";
 import { User } from "../interface/user";
 import Basket from "./Basket";
+import { Link } from "react-router-dom";
 
 
 function NavbarComponent() {
@@ -15,9 +16,9 @@ function NavbarComponent() {
     return (
         <nav className="navbar navbar-expand-lg" data-bs-theme="dark">
             <Container className="container-fluid">
-                <Navbar.Brand className="navbar-brand" href="#home">
+                <Link to="/" className="navbar-brand">
                     eShop<span id="span_lio">Qc</span>
-                </Navbar.Brand>
+                </Link>
                 <button className="navbar-toggler collapsed" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                     aria-label="Toggle navigation">
@@ -27,10 +28,10 @@ function NavbarComponent() {
                 </button>
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <Nav className="navbar-nav ms-auto mb-1 mb-lg-0 align-content-left">
-                        <Nav.Link className="nav-link" href="#home">Home</Nav.Link>
-                        <Nav.Link className="nav-link" href="#games">Search</Nav.Link>
-                        <Nav.Link className="nav-link" href="#checkout"><Basket /></Nav.Link>
-                        <Nav.Link data-log={currentUser?.firstName + " " + currentUser?.lastName} className="nav-link" href="#investor">Login</Nav.Link>
+                        <Nav.Link as={Link} to="/" className="nav-link">Home</Nav.Link>
+                        <Nav.Link as={Link} to="/games" className="nav-link">Search</Nav.Link>
+                        <Nav.Link as={Link} to="/checkout" className="nav-link"><Basket /></Nav.Link>
+                        <Nav.Link as={Link} to="/login" data-log={currentUser?.firstName + " " + currentUser?.lastName} className="nav-link">Login</Nav.Link>
                     </Nav>
                 </div>
             </Container>

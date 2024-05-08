@@ -58,7 +58,7 @@ export class Auth {
         }
     }
 
-    async refreshSession(expiresInMins: number = 60): Promise<void> {
+    async refreshSession(expiresInMins: number = 120): Promise<void> {
         if (!this.token) {
             throw new Error('No token available. Please login first.');
         }
