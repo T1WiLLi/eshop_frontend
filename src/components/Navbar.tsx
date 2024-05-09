@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Container, Nav } from "react-bootstrap";
+import { Container, Dropdown, Nav } from "react-bootstrap";
 import "../styles/components/navbar.css";
 import { User } from "../interface/user";
 import Basket from "./Basket";
@@ -40,6 +40,11 @@ function NavbarComponent() {
         };
     }, []);
 
+    const handleLogout = () => {
+        Cookie.destroyToken();
+        setUser(null);
+    };
+
     return (
         <nav className="navbar navbar-expand-lg" data-bs-theme="dark">
             <Container className="container-fluid">
@@ -58,13 +63,42 @@ function NavbarComponent() {
                         <Nav.Link as={Link} to="/" className="nav-link">Home</Nav.Link>
                         <Nav.Link as={Link} to="/search" className="nav-link">Search</Nav.Link>
                         <Nav.Link as={Link} to="/checkout" className="nav-link"><Basket /></Nav.Link>
-                        <Nav.Link as={Link} to="/login" data-log={currentUser?.firstName + " " + currentUser?.lastName} className="nav-link">Login</Nav.Link>
+                        {currentUser ? (
+                            <AccountMenu user={currentUser} onLogout={handleLogout} />
+                        ) : (
+                            <Nav.Link as={Link} to="/login">
+                                Login
+                            </Nav.Link>
+                        )}
                     </Nav>
                 </div>
             </Container>
         </nav>
     );
 }
+
+interface AccountMenuProps {
+    user: User;
+    onLogout: () => void;
+}
+
+const AccountMenu: React.FC<AccountMenuProps> = ({ user, onLogout }) => {
+    return (
+        <Dropdown>
+            <Dropdown.Toggle as={Nav.Link} className="nav-link">
+                <i className="fa-solid fa-user"></i>
+            </Dropdown.Toggle>
+            <Dropdown.Menu>
+                <Dropdown.Item>
+                    {user.firstName} {user.lastName}
+                </Dropdown.Item>
+                <Dropdown.Item disabled>N/A</Dropdown.Item>
+                <Dropdown.Divider />
+                <Dropdown.Item onClick={onLogout}>Disconnect</Dropdown.Item>
+            </Dropdown.Menu>
+        </Dropdown>
+    );
+};
 
 class ScrollHandler {
     constructor() {

@@ -1,9 +1,6 @@
-import { useEffect, useState } from "react";
+import { useBasket } from "../context/BasketContext";
 import { Product } from "../interface/product";
 import "../styles/components/basket.css";
-import { Fetcher } from "../api/fetch";
-import { useNavigate } from "react-router-dom";
-
 interface ProductBasketProps {
     product: Product;
     amountOfProduct: number;
@@ -13,86 +10,9 @@ interface ProductBasketProps {
 }
 
 function Basket() {
-    const [products, setProducts] = useState<{ product: Product; amount: number }[]>([]);
-    const navigate = useNavigate();
+    const { products, handleIncrement, handleDecrement, handleRemove, calculateSubtotal, handleCheckout } = useBasket();
 
-    useEffect(() => {
-        const handleClick = async (event: { currentTarget: any; }) => {
-            const clickedElement = event.currentTarget;
-            const productId = clickedElement.dataset.productId;
-            if (productId) {
-                try {
-                    const product = await new Fetcher().fetchProductFromId(productId);
-                    addToBasket(product);
-                } catch (error) {
-                    console.error('Error fetching product:', error);
-                }
-            }
-        };
-
-        const productElements = document.querySelectorAll('[data-product-id]') as NodeListOf<HTMLButtonElement>;
-        productElements.forEach((element) => {
-            element.addEventListener('click', handleClick);
-        });
-
-        return () => {
-            productElements.forEach((element) => {
-                element.removeEventListener('click', handleClick);
-            });
-        };
-    }, []);
-
-    const addToBasket = (product: Product) => {
-        setProducts((prevProducts) => {
-            const existingProductIndex = prevProducts.findIndex((item) => item.product.id === product.id);
-
-            if (existingProductIndex !== -1) {
-                console.log("Product exists!");
-                return prevProducts.map((item, index) =>
-                    index === existingProductIndex ? { ...item, amount: item.amount + 1 } : item
-                );
-            } else {
-                console.log("Product doesn't exist!");
-                return [...prevProducts, { product, amount: 1 }];
-            }
-        });
-    };
-
-
-    const handleIncrement = (productId: number) => {
-        setProducts((prevProducts) =>
-            prevProducts.map((item) =>
-                item.product.id === productId
-                    ? { ...item, amount: item.amount + 1 }
-                    : item
-            )
-        );
-    };
-
-    const handleDecrement = (productId: number) => {
-        setProducts((prevProducts) =>
-            prevProducts.map((item) =>
-                item.product.id === productId && item.amount > 1
-                    ? { ...item, amount: item.amount - 1 }
-                    : item
-            )
-        );
-    };
-
-    const handleRemove = (productId: number) => {
-        setProducts((prevProducts) =>
-            prevProducts.filter((item) => item.product.id !== productId)
-        );
-    };
-
-    const calculateSubtotal = () => {
-        return products.reduce((acc, item) => acc + item.product.price * item.amount, 0);
-    };
-
-    const handleCheckout = () => {
-        navigate('/checkout');
-    };
-
+    //TODO: Fixe the cart click 
     const handleClick = (e: React.MouseEvent) => {
         e.preventDefault();
         e.stopPropagation();
@@ -130,7 +50,7 @@ function Basket() {
                     </p>
                 </div>
                 <div onClick={(e) => e.stopPropagation()}>
-                    <button onClick={handleCheckout}>Checkout</button>
+                    <button type="button" className="btn btn-primary" onClick={handleCheckout}>Checkout</button>
                 </div>
             </div>
         </div>

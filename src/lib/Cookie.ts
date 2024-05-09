@@ -25,6 +25,11 @@ export class Cookie {
         return null;
     }
 
+    public static destroyToken() {
+        const expiryDate = new Date(0);
+        document.cookie = `${Cookie.tokenName}=; expires=${expiryDate.toUTCString()}; path=/`;
+    }
+
     public refreshExpiry(): void {
         if (this.token) {
             this.setToken(this.token); 
