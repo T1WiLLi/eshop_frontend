@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Product } from "../interface/product";
 import "../styles/components/basket.css";
 import { Fetcher } from "../api/fetch";
+import { useNavigate } from "react-router-dom";
 
 interface ProductBasketProps {
     product: Product;
@@ -13,6 +14,7 @@ interface ProductBasketProps {
 
 function Basket() {
     const [products, setProducts] = useState<{ product: Product; amount: number }[]>([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const handleClick = async (event: { currentTarget: any; }) => {
@@ -28,7 +30,7 @@ function Basket() {
             }
         };
 
-        const productElements = document.querySelectorAll('[data-product-id]');
+        const productElements = document.querySelectorAll('[data-product-id]') as NodeListOf<HTMLButtonElement>;
         productElements.forEach((element) => {
             element.addEventListener('click', handleClick);
         });
@@ -87,9 +89,17 @@ function Basket() {
         return products.reduce((acc, item) => acc + item.product.price * item.amount, 0);
     };
 
+    const handleCheckout = () => {
+        navigate('/checkout');
+    };
+
+    const handleClick = (e: React.MouseEvent) => {
+        e.preventDefault();
+        e.stopPropagation();
+    };
 
     return (
-        <div className="basket-container position-relative d-inline-block">
+        <div className="basket-container position-relative d-inline-block" onClick={handleClick}>
             <div className="basket-icon position-relative">
                 <i className="fas fa-shopping-basket"></i>
             </div>
@@ -119,7 +129,9 @@ function Basket() {
                         {calculateSubtotal().toLocaleString('en-US', { style: 'currency', currency: 'USD' })}
                     </p>
                 </div>
-                <button className="btn btn-primary mx-1 mb-2">Checkout</button>
+                <div onClick={(e) => e.stopPropagation()}>
+                    <button onClick={handleCheckout}>Checkout</button>
+                </div>
             </div>
         </div>
     );

@@ -1,5 +1,6 @@
 import { AuthResponse } from "../interface/auth";
 import { User } from "../interface/user";
+import { Cookie } from "../lib/Cookie";
 import { formatUser } from "./apiHelper";
 
 export class Auth {
@@ -11,7 +12,7 @@ export class Auth {
         this.token = null;
     }
 
-    async loginUser(username: string, password: string, expiresInMins: number = 60): Promise<AuthResponse> {
+    async loginUser(username: string, password: string, expiresInMins: number = 120): Promise<AuthResponse> {
         try {
             const res = await fetch(`${this.apiUrl}/login`, {
                 method: 'POST',
@@ -24,23 +25,31 @@ export class Auth {
             });
             const data = await res.json();
             this.token = data.token;
-            return {
-                token: data.token,
-                response: 'Login successful',
-                success: true
+            if (this.token) {
+                return {
+                    token: data.token,
+                    response: 'Login successful',
+                    success: true
+                };
+            } else {
+                return {
+                    token: null,
+                    response: 'Invalid credentials',
+                    success: false
+                };
             }
         } catch (error: any) {
+            console.log(error.message);
             return {
                 token: null,
-                response: 'Invalid credentials',
+                response: 'Internal Server Error',
                 success: false
             };
         }
     }
 
-    async getCurrentUser(): Promise<User> {
-        console.log("Hello");
-        if (!this.token) {
+    async getCurrentUser(token: string | null): Promise<User> {
+        if (!token) {
             throw new Error('No token available. Please login first.');
         }
 
@@ -48,7 +57,7 @@ export class Auth {
             const res = await fetch(`${this.apiUrl}/me`, {
                 method: 'GET',
                 headers: {
-                    'Authorization': `Bearer ${this.token}`
+                    'Authorization': `Bearer ${token}`
                 }
             });
             const data = await res.json();
@@ -76,6 +85,7 @@ export class Auth {
             });
             const data = await response.json();
             this.token = data.token;
+            new Cookie(Cookie.getToken()).refreshExpiry();
         } catch (error: any) {
             throw new Error(`Error refreshing session: ${error.message}`);
         }

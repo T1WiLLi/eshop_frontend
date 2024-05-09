@@ -4,6 +4,8 @@ import "../styles/components/navbar.css";
 import { User } from "../interface/user";
 import Basket from "./Basket";
 import { Link } from "react-router-dom";
+import { Auth } from "../api/auth";
+import { Cookie } from "../lib/Cookie";
 
 
 function NavbarComponent() {
@@ -11,6 +13,31 @@ function NavbarComponent() {
 
     useEffect(() => {
         new ScrollHandler();
+
+        const fetchUser = async () => {
+            try {
+                const auth = new Auth();
+                const token = Cookie.getToken();
+                if (token) {
+                    const user = await auth.getCurrentUser(token);
+                    console.log(user);
+                    setUser(user);
+                }
+            } catch (error: any) {
+                console.error("Error fetching user:", error.message);
+            }
+        };
+        fetchUser();
+
+        const tokenChangeHandler = () => {
+            fetchUser();
+        };
+        window.addEventListener("tokenchange", tokenChangeHandler);
+
+
+        return () => {
+            window.removeEventListener("tokenchange", tokenChangeHandler);
+        };
     }, []);
 
     return (
@@ -29,7 +56,7 @@ function NavbarComponent() {
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <Nav className="navbar-nav ms-auto mb-1 mb-lg-0 align-content-left">
                         <Nav.Link as={Link} to="/" className="nav-link">Home</Nav.Link>
-                        <Nav.Link as={Link} to="/games" className="nav-link">Search</Nav.Link>
+                        <Nav.Link as={Link} to="/search" className="nav-link">Search</Nav.Link>
                         <Nav.Link as={Link} to="/checkout" className="nav-link"><Basket /></Nav.Link>
                         <Nav.Link as={Link} to="/login" data-log={currentUser?.firstName + " " + currentUser?.lastName} className="nav-link">Login</Nav.Link>
                     </Nav>
