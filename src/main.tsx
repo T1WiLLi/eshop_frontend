@@ -15,6 +15,6 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       <BasketProvider>
         <App />
       </BasketProvider>
-    </BrowserRouter>,
-  </React.StrictMode>,
+    </BrowserRouter>
+  </React.StrictMode>
 )

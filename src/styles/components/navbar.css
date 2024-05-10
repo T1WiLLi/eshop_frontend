@@ -1,8 +1,10 @@
 .navbar {
     position: fixed!important;
+    top: 0;
+    left: 0;
+    right: 0;
     width: 100%;
     padding: 15px 0;
-    background-color: transparent;
     z-index: 5;
     transition: all ease 0.4s;
     font-family: var(--title-font);
