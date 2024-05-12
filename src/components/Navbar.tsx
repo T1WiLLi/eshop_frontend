@@ -3,20 +3,21 @@ import { Container, Dropdown, Nav } from "react-bootstrap";
 import "../styles/components/navbar.css";
 import { User } from "../interface/user";
 import Basket from "./Basket";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Auth } from "../api/auth";
 import { Cookie } from "../lib/Cookie";
 
 
 function NavbarComponent() {
     const [currentUser, setUser] = useState<User | null>(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         new ScrollHandler();
 
         const fetchUser = async () => {
             try {
-                const auth = new Auth();
+                const auth = Auth.getInstance();
                 const token = Cookie.getToken();
                 if (token) {
                     const user = await auth.getCurrentUser(token);
@@ -45,6 +46,21 @@ function NavbarComponent() {
         setUser(null);
     };
 
+    const handleAccount = async () => {
+        if (currentUser && currentUser.username && currentUser.password) {
+            try {
+                const res = await Auth.getInstance().loginUser(
+                    currentUser.username,
+                    currentUser.password,
+                    120
+                );
+                navigate(`/account?token=${res.token}`);
+            } catch (error) {
+                console.error("Error logging in:", error);
+            }
+        }
+    }
+
     return (
         <nav className="navbar navbar-expand-lg" data-bs-theme="dark">
             <Container className="container-fluid">
@@ -64,7 +80,7 @@ function NavbarComponent() {
                         <Nav.Link as={Link} to="/search" className="nav-link">Search</Nav.Link>
                         <Nav.Link as={Link} to="/checkout" className="nav-link"><Basket /></Nav.Link>
                         {currentUser ? (
-                            <AccountMenu user={currentUser} onLogout={handleLogout} />
+                            <AccountMenu user={currentUser} onLogout={handleLogout} onAccount={handleAccount} />
                         ) : (
                             <Nav.Link as={Link} to="/login">
                                 Login
@@ -80,9 +96,10 @@ function NavbarComponent() {
 interface AccountMenuProps {
     user: User;
     onLogout: () => void;
+    onAccount: () => void;
 }
 
-const AccountMenu: React.FC<AccountMenuProps> = ({ user, onLogout }) => {
+const AccountMenu: React.FC<AccountMenuProps> = ({ user, onLogout, onAccount }) => {
     return (
         <Dropdown>
             <Dropdown.Toggle as={Nav.Link} className="nav-link">
@@ -92,7 +109,7 @@ const AccountMenu: React.FC<AccountMenuProps> = ({ user, onLogout }) => {
                 <Dropdown.Item>
                     {user.firstName} {user.lastName}
                 </Dropdown.Item>
-                <Dropdown.Item disabled>N/A</Dropdown.Item>
+                <Dropdown.Item onClick={onAccount}>Account</Dropdown.Item>
                 <Dropdown.Divider />
                 <Dropdown.Item onClick={onLogout}>Disconnect</Dropdown.Item>
             </Dropdown.Menu>

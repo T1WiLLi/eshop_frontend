@@ -68,7 +68,7 @@
 
 .buy-button, .add-to-cart-button {
     background-color: #4CAF50;
-    color: #fff;
+    color: var(--white);
     border-radius: .5rem;
 }
 .buy-button:hover, .add-to-cart-button:hover {

@@ -1,10 +1,26 @@
 import { Link } from "react-router-dom";
 
-function NotFound() {
+interface StatusMessage {
+    number: number;
+    message: string;
+}
+
+function NotFound({ statusCode = 404, message = "The page you are looking for does not exist." }) {
+
+    const statusMessages: StatusMessage[] = [
+        { number: 400, message: 'Bad Request' },
+        { number: 401, message: 'Unauthorized' },
+        { number: 403, message: 'Forbidden' },
+        { number: 404, message: 'Not Found' },
+        { number: 500, message: 'Internal Server Error' },
+    ];
+
+    const statusMessage = statusMessages.find(msg => msg.number === statusCode)?.message || message;
+
     return (
         <div style={styles.container}>
-            <h1 style={styles.heading}>404 - Not Found</h1>
-            <p style={styles.message}>The page you are looking for does not exist.</p>
+            <h1 style={styles.heading}>{`${statusCode} - ${statusMessage}`}</h1>
+            <p style={styles.message}>{message}</p>
             <Link to="/" style={styles.link}>Go to Home</Link>
         </div>
     );

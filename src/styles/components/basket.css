@@ -144,7 +144,7 @@ hr {
         flex: 1;
     }
 
-    .basket-container:hover .basket-items,
+    .basket-container:hover .basket-items, /* Disable Basket view on mobile, We could enable it, but we would need to style it ...  */
     .basket-items:hover {
         display: none;
         opacity: 0;

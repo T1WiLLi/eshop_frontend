@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { Product } from "../interface/product";
 import { User } from "../interface/user";
 import { formatProduct, formatUser } from "./apiHelper";
@@ -11,12 +12,8 @@ export class Fetcher {
 
     async fetchAllUser(): Promise<User[]> {
         try {
-            const res = await fetch(`${this.apiUrl}user`);
-            if (!res.ok) {
-                throw new Error('Failed to fetch user data');
-            }
-            const usersData = await res.json();
-            return usersData.map((userData: any) => formatUser(userData));
+            const res = await axios.get(`${this.apiUrl}user`);
+            return res.data.map((userData: any) => formatUser(userData));
         } catch (error: any) {
             throw new Error(`Error fetching user data: ${error.message}`);
         }
@@ -24,12 +21,8 @@ export class Fetcher {
 
     async fetchUserFromId(id: number): Promise<User> {
         try {
-            const res = await fetch(`${this.apiUrl}user/${id}`)
-            if (!res.ok) {
-                throw new Error('Failed to fetch product data');
-            }
-            const userData = await res.json();
-            return formatUser(userData);
+            const res = await axios.get(`${this.apiUrl}user/${id}`);
+            return formatUser(res.data);
         } catch (error: any) {
             throw new Error(`Error fetching user data: ${error.message}`);
         }
@@ -37,26 +30,19 @@ export class Fetcher {
  
     async fetchAllProduct(): Promise<Product[]> {
         try {
-            const res = await fetch(`${this.apiUrl}products?limit=0`);
-            if (!res.ok) {
-                throw new Error('Failed to fetch product data');
-            }
-            const rawData = await res.json();
-            const productsData = rawData.products;
+            const res = await axios.get(`${this.apiUrl}products?limit=0`);
+            const productsData = res.data.products;
             return productsData.map((productsData: any) => formatProduct(productsData));
         } catch (error: any) {
             throw new Error(`Error fetching product data: ${error.message}`);
         }
     }
 
+
     async fetchProductFromId(id: number): Promise<Product> {
         try {
-            const res = await fetch(`${this.apiUrl}products/${id}`);
-            if (!res.ok) {
-                throw new Error('Failed to fetch product data');
-            }
-            const productData = await res.json();
-            return formatProduct(productData);
+            const res = await axios.get(`${this.apiUrl}products/${id}`);
+            return formatProduct(res.data);
         } catch (error: any) {
             throw new Error(`Error fetching product data: ${error.message}`);
         }

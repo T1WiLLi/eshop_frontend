@@ -1,29 +1,36 @@
+import axios from 'axios';
 import { AuthResponse } from "../interface/auth";
 import { User } from "../interface/user";
 import { Cookie } from "../lib/Cookie";
 import { formatUser } from "./apiHelper";
 
-export class Auth {
+export class Auth { // Singleton
+
+    private static instance: Auth;
+
     private apiUrl: string;
     private token: string | null;
 
-    constructor() {
+    private constructor() {
         this.apiUrl = 'https://dummyjson.com/auth';
         this.token = null;
     }
 
+    public static getInstance(): Auth {
+        if (!Auth.instance) {
+            Auth.instance = new Auth();
+        }
+        return Auth.instance;
+    }
+
     async loginUser(username: string, password: string, expiresInMins: number = 120): Promise<AuthResponse> {
         try {
-            const res = await fetch(`${this.apiUrl}/login`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    username,
-                    password,
-                    expiresInMins
-                })
+            const res = await axios.post(`${this.apiUrl}/login`, {
+                username,
+                password,
+                expiresInMins
             });
-            const data = await res.json();
+            const data = res.data;
             this.token = data.token;
             if (this.token) {
                 return {
@@ -54,14 +61,12 @@ export class Auth {
         }
 
         try {
-            const res = await fetch(`${this.apiUrl}/me`, {
-                method: 'GET',
+            const res = await axios.get(`${this.apiUrl}/me`, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
             });
-            const data = await res.json();
-            return formatUser(data);
+            return formatUser(res.data);
         } catch (error: any) {
             throw new Error(`Error fetching current user: ${error.message}`);
         }
@@ -73,17 +78,14 @@ export class Auth {
         }
 
         try {
-            const response = await fetch(`${this.apiUrl}/refresh`, {
-                method: 'POST',
+            const response = await axios.post(`${this.apiUrl}/refresh`, {
+                expiresInMins
+            }, {
                 headers: {
-                    'Content-Type': 'application/json',
                     'Authorization': `Bearer ${this.token}`
-                },
-                body: JSON.stringify({
-                    expiresInMins
-                })
+                }
             });
-            const data = await response.json();
+            const data = response.data;
             this.token = data.token;
             new Cookie(Cookie.getToken()).refreshExpiry();
         } catch (error: any) {
@@ -91,29 +93,3 @@ export class Auth {
         }
     }
 }
-
-/*
-
-  const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
-  const getUserInfo = async () => {
-    try {
-      setLoading(true);
-      const auth = new Auth();
-      const loginResponse = await auth.loginUser("kminchelle", "0lelplR");
-      if (loginResponse.success) {
-        const currentUser = await auth.getCurrentUser();
-        setUser(currentUser);
-      } else {
-        setError("Login failed: " + loginResponse.response);
-      }
-    } catch (error: any) {
-      setError("Error: " + error.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-*/

@@ -12,7 +12,7 @@ function Login() {
 
     const handleLogin = async () => {
         try {
-            const auth = new Auth();
+            const auth = Auth.getInstance();
             const loginResponse = await auth.loginUser(username, password) as AuthResponse;
             if (loginResponse.success) {
                 new Cookie(loginResponse.token);
