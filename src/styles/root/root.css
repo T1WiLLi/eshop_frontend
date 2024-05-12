@@ -55,7 +55,7 @@ html:focus-within {
 body {
     text-rendering: optimizeSpeed;
     line-height: 1.5;
-    background-color: var(--bg-color)!important;
+    background-color: #999!important;
     font-family: Raleway, sans-serif;
 }
 

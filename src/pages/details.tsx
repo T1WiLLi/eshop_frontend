@@ -1,13 +1,17 @@
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Fetcher } from "../api/fetch";
 import { Product } from "../interface/product";
 import "../styles/components/details.css";
+import { useBasket } from "../context/BasketContext";
 
 const Detail = () => {
+    const navigate = useNavigate();
     const location = useLocation();
     const searchParams = new URLSearchParams(location.search);
     const productString = searchParams.get("product");
+
+    const { addToBasket } = useBasket();
 
     const [product, setProduct] = useState<Product | null>(null);
     const [error, setError] = useState<string | null>(null);
@@ -34,6 +38,10 @@ const Detail = () => {
 
         fetchProduct();
     }, [productString]);
+
+    const handleBuyNow = () => {
+        navigate("/checkout", { state: { product } });
+    }
 
     if (error) {
         return <div>{error}</div>;
@@ -86,8 +94,8 @@ const Detail = () => {
                 </ul>
             </div>
             <div className="product-detail-actions">
-                <button className="buy-button">Buy Now</button>
-                <button data-product-id={product.id} className="add-to-cart-button">Add to Cart</button>
+                <button onClick={handleBuyNow} className="buy-button">Buy Now</button>
+                <button onClick={() => addToBasket(product)} className="add-to-cart-button">Add to Cart</button>
             </div>
         </div>
     );
