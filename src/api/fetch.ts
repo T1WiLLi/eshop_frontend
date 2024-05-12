@@ -22,6 +22,19 @@ export class Fetcher {
         }
     }
 
+    async fetchUserFromId(id: number): Promise<User> {
+        try {
+            const res = await fetch(`${this.apiUrl}user/${id}`)
+            if (!res.ok) {
+                throw new Error('Failed to fetch product data');
+            }
+            const userData = await res.json();
+            return formatUser(userData);
+        } catch (error: any) {
+            throw new Error(`Error fetching user data: ${error.message}`);
+        }
+    }
+ 
     async fetchAllProduct(): Promise<Product[]> {
         try {
             const res = await fetch(`${this.apiUrl}products?limit=0`);
