@@ -21,7 +21,6 @@ function NavbarComponent() {
                 const token = Cookie.getToken();
                 if (token) {
                     const user = await auth.getCurrentUser(token);
-                    console.log(user);
                     setUser(user);
                 }
             } catch (error: any) {
