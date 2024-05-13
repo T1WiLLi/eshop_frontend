@@ -4,6 +4,7 @@ import { User } from "../interface/user";
 import { Auth } from "../api/auth";
 import "../styles/components/accounts.css";
 import { Container, Row, Col, Card } from "react-bootstrap";
+import NotFound from "./notFound";
 
 
 function Account() {
@@ -34,7 +35,7 @@ function Account() {
     }, [token]);
 
     if (error) {
-        return <div>{error}</div>;
+        return <NotFound statusCode={403} message="You need to connect in order to access the Account page" />;
     }
 
     if (!user) {
