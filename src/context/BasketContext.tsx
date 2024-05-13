@@ -15,7 +15,11 @@ const BasketContext = createContext<BasketContextValue>({
 });
 
 export const BasketProvider = ({ children }: { children: React.ReactNode }) => {
-    const [products, setProducts] = useState<{ product: Product; amount: number }[]>([]);
+    const [products, setProducts] = useState<{ product: Product; amount: number }[]>(() => {
+        const storedProducts = localStorage.getItem('basket');
+        return storedProducts ? JSON.parse(storedProducts) : [];
+    });
+
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -39,11 +43,13 @@ export const BasketProvider = ({ children }: { children: React.ReactNode }) => {
         };
     }, []);
 
+    useEffect(() => {
+        localStorage.setItem('basket', JSON.stringify(products));
+    }, [products]);
 
     const addToBasket = (product: Product) => {
         setProducts((prevProducts) => {
             const existingProductIndex = prevProducts.findIndex((item) => item.product.id === product.id);
-
             if (existingProductIndex !== -1) {
                 return prevProducts.map((item, index) =>
                     index === existingProductIndex ? { ...item, amount: item.amount + 1 } : item
@@ -57,9 +63,7 @@ export const BasketProvider = ({ children }: { children: React.ReactNode }) => {
     const handleIncrement = (productId: number) => {
         setProducts((prevProducts) =>
             prevProducts.map((item) =>
-                item.product.id === productId
-                    ? { ...item, amount: item.amount + 1 }
-                    : item
+                item.product.id === productId ? { ...item, amount: item.amount + 1 } : item
             )
         );
     };
@@ -67,17 +71,13 @@ export const BasketProvider = ({ children }: { children: React.ReactNode }) => {
     const handleDecrement = (productId: number) => {
         setProducts((prevProducts) =>
             prevProducts.map((item) =>
-                item.product.id === productId && item.amount > 1
-                    ? { ...item, amount: item.amount - 1 }
-                    : item
+                item.product.id === productId && item.amount > 1 ? { ...item, amount: item.amount - 1 } : item
             )
         );
     };
 
     const handleRemove = (productId: number) => {
-        setProducts((prevProducts) =>
-            prevProducts.filter((item) => item.product.id !== productId)
-        );
+        setProducts((prevProducts) => prevProducts.filter((item) => item.product.id !== productId));
     };
 
     const calculateSubtotal = () => {
