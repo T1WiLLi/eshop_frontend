@@ -7,12 +7,25 @@ import Detail from "./pages/details";
 import Account from "./pages/account";
 import Checkout from "./pages/checkout";
 import Search from "./pages/search";
+import { useEffect } from "react";
+import { Auth } from "./api/auth";
 
 function App() {
   const location = useLocation();
   const allowedPaths = ['/', '/detail']; // Add more path as we add Route, Add the path that needs to render the NavbarComponent to work
   const shouldRenderNavbar = allowedPaths.includes(location.pathname);
 
+  const handleRefresh = () => {
+    Auth.getInstance().refreshSession();
+  };
+  
+  useEffect(() => {
+    document.addEventListener('click', handleRefresh);
+    return () => {
+      document.removeEventListener('click', handleRefresh);
+    };
+  }, []);
+  
   return (
     <>
       {shouldRenderNavbar && <NavbarComponent />}
