@@ -6,7 +6,7 @@ import NotFound from "./pages/notFound";
 import Detail from "./pages/details";
 import Account from "./pages/account";
 import Checkout from "./pages/checkout";
-import Search from "./pages/search";
+import Shop from "./pages/shop";
 
 function App() {
   const location = useLocation();
@@ -22,7 +22,7 @@ function App() {
         <Route path="/detail" element={<Detail />} />
         <Route path="/account" element={<Account />} />
         <Route path="/checkout" element={<Checkout />} />
-        <Route path="/search" element={<Search />} />
+        <Route path="/shop" element={<Shop />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </>
