@@ -78,7 +78,7 @@ const ProductBasket: React.FC<ProductBasketProps> = ({
                     <div className="details-extra d-flex align-items-center gap-1">
                         <p className="category-text">{product.category}</p>
                         <div className="product-actions">
-                            <button onClick={() => onRemove(product.id)}><i className="fa-solid fa-trash"></i></button>
+                            <button aria-label="Remove" type="button" onClick={() => onRemove(product.id)}><i className="fa-solid fa-trash"></i></button>
                         </div>
                     </div>
                 </div>
