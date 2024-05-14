@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Product } from '../interface/product';
-import { Col, Row, Button } from 'react-bootstrap';
+import { Col, Row, Button, Container } from 'react-bootstrap';
 import ProductTemplate from './ProductTemplate';
 import "../styles/components/categoryGrid.css";
 
@@ -33,34 +33,29 @@ function CategoryGrid({ products }: CategoryGridProps) {
     const renderCategoryRow = (category: string, products: Product[]) => {
         const categoryName = category.replace('-', ' ');
         const isExpanded = expandedCategories.includes(category);
-        const initialProductCount = 6; // Number of products to display initially
+        const initialProductCount = 4; // Number of products to display initially
 
         return (
             <React.Fragment key={category}>
-                <Row onClick={() => toggleCategoryExpansion(category)} style={{ cursor: 'pointer' }}>
-                    <Col>
+                <Row className="flex-row category-title" onClick={() => toggleCategoryExpansion(category)} style={{ cursor: 'pointer' }}>
+                    <Col className="d-flex" style={{ flex: 'none' }}>
                         <h3>{categoryName.toUpperCase()}</h3>
-                    </Col>
-                    <Col className="text-right">
-                        <Button variant="link">{isExpanded ? 'Collapse' : 'Expand'}</Button>
+                        <Button variant="link">
+                            {isExpanded ? (
+                                <i className="fa-solid fa-minus"> See Less</i>
+                            ) : (
+                                <i className="fa-solid fa-plus"> See More</i>
+                            )}
+                        </Button>
                     </Col>
                 </Row>
-                <Row className='d-flex gap-2'>
-                    {products.slice(0, initialProductCount).map(product => (
-                        <Col key={product.id} className='product-col'>
-                            <ProductTemplate product={product} />
+                <div className="d-flex flex-wrap gap-2 product-row-holder">
+                    {products.map((product, index) => (
+                        <Col key={product.id} className="product-col">
+                            {(index < initialProductCount || isExpanded) && <ProductTemplate key={product.id} product={product} />}
                         </Col>
                     ))}
-                </Row>
-                {isExpanded && (
-                    <Row className='d-flex gap-2'>
-                        {products.slice(initialProductCount).map(product => (
-                            <Col key={product.id} className='product-col'>
-                                <ProductTemplate product={product} />
-                            </Col>
-                        ))}
-                    </Row>
-                )}
+                </div>
             </React.Fragment>
         );
     };
@@ -69,7 +64,7 @@ function CategoryGrid({ products }: CategoryGridProps) {
     const diverseProducts = products.filter(product => !Object.values(categories).flat().includes(product.category));
 
     return (
-        <div>
+        <div className='d-flex flex-column align-items-center'>
             {Object.entries(categories).map(([category, subCategories]) => {
                 const categoryProducts = products.filter(product => subCategories.includes(product.category));
                 if (categoryProducts.length > 0) {

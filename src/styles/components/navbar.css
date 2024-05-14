@@ -16,8 +16,8 @@
 }
 
 .navbar .container-fluid{
-    width: 1300px;
-    max-width: 1300px;
+    width: 1300px!important;
+    max-width: 1300px!important;
     padding: 0 4rem;
     display: flex;
     justify-content: center;

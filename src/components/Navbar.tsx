@@ -76,7 +76,7 @@ function NavbarComponent() {
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <Nav className="navbar-nav ms-auto mb-1 mb-lg-0 align-content-left">
                         <Nav.Link as={Link} to="/" className="nav-link">Home</Nav.Link>
-                        <Nav.Link as={Link} to="/shop" className="nav-link">Search</Nav.Link>
+                        <Nav.Link as={Link} to="/shop" className="nav-link">Shop</Nav.Link>
                         <Nav.Link as={Link} to="/checkout" className="nav-link"><Basket /></Nav.Link>
                         {currentUser ? (
                             <AccountMenu user={currentUser} onLogout={handleLogout} onAccount={handleAccount} />

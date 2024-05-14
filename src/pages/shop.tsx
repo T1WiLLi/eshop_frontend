@@ -3,6 +3,7 @@ import { Fetcher } from "../api/fetch"
 import CategoryGrid from "../components/CategoryGrid";
 import { Product } from "../interface/product";
 import "../styles/components/shop.css";
+import { Container } from "react-bootstrap";
 
 function shop() {
     const [products, setProducts] = useState<Product[]>([]);
@@ -21,9 +22,10 @@ function shop() {
     }, []);
 
     return (
-        <div className="shop">
-            <h1>Shop</h1>
-            <CategoryGrid products={products} />
+        <div className="shop-holder">
+            <Container className="shop">
+                <CategoryGrid products={products} />
+            </Container>
         </div>
     )
 }

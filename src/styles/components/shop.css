@@ -1,4 +1,14 @@
 .shop {
+    margin-top: 5rem;
     padding: 4rem 1rem;
     overflow: hidden;
+    width: 1300px!important;
+    max-width: 1300px!important;
+    display: flex;
+    justify-content: center;
+}
+
+.shop-holder {
+    width: fit-content;
+    margin: 0 auto;
 }
