@@ -18,14 +18,14 @@ function App() {
   const handleRefresh = () => {
     Auth.getInstance().refreshSession();
   };
-  
+
   useEffect(() => {
     document.addEventListener('click', handleRefresh);
     return () => {
       document.removeEventListener('click', handleRefresh);
     };
   }, []);
-  
+
   return (
     <>
       {shouldRenderNavbar && <NavbarComponent />}
