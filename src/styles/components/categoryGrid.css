@@ -1,0 +1,24 @@
+.product-col {
+    flex: none!important;
+    width: 280px!important;
+}
+
+.category-title {
+    width: 100%;
+}
+
+.category {
+    margin: 0!important;
+}
+
+.product-row-holder {
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+@media screen and (max-width: 768px) {
+    .product-col {
+        width: 100%;
+    }
+}

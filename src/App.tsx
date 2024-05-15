@@ -12,20 +12,20 @@ import Shop from "./pages/shop";
 
 function App() {
   const location = useLocation();
-  const allowedPaths = ['/', '/detail']; // Add more path as we add Route, Add the path that needs to render the NavbarComponent to work
+  const allowedPaths = ['/', '/detail', '/shop']; // Add more path as we add Route, Add the path that needs to render the NavbarComponent to work
   const shouldRenderNavbar = allowedPaths.includes(location.pathname);
 
   const handleRefresh = () => {
     Auth.getInstance().refreshSession();
   };
-  
+
   useEffect(() => {
     document.addEventListener('click', handleRefresh);
     return () => {
       document.removeEventListener('click', handleRefresh);
     };
   }, []);
-  
+
   return (
     <>
       {shouldRenderNavbar && <NavbarComponent />}
