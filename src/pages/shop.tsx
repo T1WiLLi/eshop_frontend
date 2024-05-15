@@ -63,7 +63,7 @@ function Shop() {
     return (
         <div className="shop-holder">
             <Container className="shop">
-                <SearchBar products={products} onSearch={handleSearch} />
+                <SearchBar products={products} onFilteredProductsChange={handleSearch} />
                 <CategoryGrid products={filteredProducts} />
             </Container>
         </div>

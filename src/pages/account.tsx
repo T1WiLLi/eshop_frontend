@@ -62,7 +62,7 @@ function Account() {
                             </Card.Text>
                         </Card.Body>
                     </Card>
-                    <Link to="/eshop">Go to Home</Link>
+                    <Link to="/">Go to Home</Link>
                 </Col>
             </Row>
         </Container>

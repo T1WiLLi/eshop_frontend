@@ -16,7 +16,7 @@ function Login() {
             const loginResponse = await auth.loginUser(username, password) as AuthResponse;
             if (loginResponse.success) {
                 new Cookie(loginResponse.token);
-                window.location.href = '/eshop';
+                window.location.href = '/';
             } else {
                 setErrorMessage('Login failed: ' + loginResponse.response);
             }

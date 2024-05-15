@@ -8,7 +8,7 @@ interface ProductTemplateProps {
 }
 
 function ProductTemplate({ product }: ProductTemplateProps) {
-    const { id, title, description, price, discountPercentage, rating, stock, brand, category, thumbnail, images } = product;
+    const { id, title, description, price, discountPercentage, rating, stock, thumbnail } = product;
 
     const navigate = useNavigate();
 
