@@ -11,6 +11,7 @@ We welcome contributions from everyone. To contribute to the project, please fol
 2. **Clone** your forked repository to your local machine: [REPO](https://github.com/T1WiLLi/eshop_frontend.git)
 
 3. **Install dependencies**:
+   In order to do so, you will have to install Node.js [NODE.JS](https://nodejs.org/en/download)
   *cd eShop* and then *npm install*
 
 5. Create a **new branch** for your feature or bug fix:
