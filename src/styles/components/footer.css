@@ -1,0 +1,27 @@
+.footer {
+    background-color: #222;
+    width: 100%;
+    min-height: 70px;
+    height: auto;
+    border-top: 2px solid var(--primary-color);
+    color: #fff;
+}
+
+.footer__copyright {
+    float: left;
+    font-family: var(--title-font);
+}
+
+.footer__social-links {
+    list-style-type: none;
+}
+
+.footer__social-links i {
+    font-size: 1.5em;
+    color: #fff;
+}
+
+
+.footer__social-links i:hover {
+    color: var(--primary-color);
+}

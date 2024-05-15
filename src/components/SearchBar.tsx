@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Product } from "../interface/product";
 import { Row, Col, Button, Form, Dropdown } from "react-bootstrap";
+import "../styles/components/searchbar.css";
 
 interface SearchBarProps {
     products: Product[];
@@ -120,35 +121,67 @@ function SearchBar({ products, onFilteredProductsChange }: SearchBarProps) {
     }, [searchTerm, minPrice, maxPrice, selectedCategory, sortCriteria]);
 
     return (
-        <Form>
-            <Row>
-                <Col>
-                    <Form.Control
-                        type="text"
-                        placeholder="Search products..."
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                    />
+        <Form className="search-bar-container">
+            <Row className="align-items-center">
+                <Col md={4} className="mb-3 mb-md-0">
+                    <div className="search-input-container">
+                        <Form.Control
+                            type="text"
+                            placeholder=""
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                            className="search-input"
+                        />
+                        <span className="search-input-placeholder">
+                            Search Products
+                        </span>
+                    </div>
                 </Col>
-                <Col>
-                    <Form.Control
-                        type="number"
-                        placeholder="Min Price"
-                        value={minPrice !== null ? minPrice : ''}
-                        onChange={(e) => setMinPrice(e.target.value !== '' ? parseInt(e.target.value) : null)}
-                    />
+                <Col md={2} className="mb-3 mb-md-0">
+                    <div className="price-input-container">
+                        <Form.Control
+                            type="number"
+                            placeholder=""
+                            value={minPrice !== null ? minPrice : ''}
+                            onChange={(e) => {
+                                const val = parseInt(e.target.value);
+                                if (val === 0) {
+                                    setMinPrice(null);
+                                } else {
+                                    setMinPrice(val);
+                                }
+                            }}
+                            className="price-input"
+                            onFocus={(e) => e.target.classList.add('focused')}
+                            onBlur={(e) => e.target.classList.remove('focused')}
+                        />
+                        <span className="price-input-placeholder">Min Price</span>
+                    </div>
                 </Col>
-                <Col>
-                    <Form.Control
-                        type="number"
-                        placeholder="Max Price"
-                        value={maxPrice !== null ? maxPrice : ''}
-                        onChange={(e) => setMaxPrice(e.target.value !== '' ? parseInt(e.target.value) : null)}
-                    />
+                <Col md={2} className="mb-3 mb-md-0">
+                    <div className="price-input-container">
+                        <Form.Control
+                            type="number"
+                            placeholder=""
+                            value={maxPrice !== null ? maxPrice : ''}
+                            onChange={(e) => {
+                                const val = parseInt(e.target.value);
+                                if (val === 0) {
+                                    setMaxPrice(null);
+                                } else {
+                                    setMaxPrice(val);
+                                }
+                            }}
+                            className="price-input"
+                            onFocus={(e) => e.target.classList.add('focused')}
+                            onBlur={(e) => e.target.classList.remove('focused')}
+                        />
+                        <span className="price-input-placeholder">Max Price</span>
+                    </div>
                 </Col>
-                <Col>
-                    <Dropdown>
-                        <Dropdown.Toggle variant="secondary" id="dropdown-categories">
+                <Col md={2} className="mb-3 mb-md-0">
+                    <Dropdown className="category-dropdown">
+                        <Dropdown.Toggle variant="secondary" id="dropdown-categories" className="category-dropdown-toggle">
                             {selectedCategory ? selectedCategory.replace('-', ' ') : 'Select a category'}
                         </Dropdown.Toggle>
                         <Dropdown.Menu>
@@ -164,23 +197,20 @@ function SearchBar({ products, onFilteredProductsChange }: SearchBarProps) {
                         </Dropdown.Menu>
                     </Dropdown>
                 </Col>
-                <Col>
-                    <Dropdown>
-                        <Dropdown.Toggle variant="secondary" id="dropdown-sort">
+                <Col md={2} className="mb-3 mb-md-0">
+                    <Dropdown className="sort-dropdown">
+                        <Dropdown.Toggle variant="secondary" id="dropdown-sort" className="sort-dropdown-toggle">
                             Sort by: {sortCriteria.replace(/([a-z])([A-Z])/g, '$1 $2').replace(/([A-Z])([A-Z][a-z])/g, '$1 $2')}
                         </Dropdown.Toggle>
                         <Dropdown.Menu>
                             <Dropdown.Item onClick={() => handleSortChange('priceDesc')}>Price (High to Low)</Dropdown.Item>
                             <Dropdown.Item onClick={() => handleSortChange('priceAsc')}>Price (Low to High)</Dropdown.Item>
                             <Dropdown.Item onClick={() => handleSortChange('stockDesc')}>Stock (High to Low)</Dropdown.Item>
-                            <Dropdown.Item onClick={() => handleSortChange('discountDesc')}>Discount (High to Low)</Dropdown.Item>
+                            <Dropdown.Item onClick={() => handleSortChange('discountDesc')}>
+                                Discount (High to Low)
+                            </Dropdown.Item>
                         </Dropdown.Menu>
                     </Dropdown>
-                </Col>
-                <Col>
-                    <Button variant="primary" onClick={filterProducts}>
-                        Search
-                    </Button>
                 </Col>
             </Row>
         </Form>

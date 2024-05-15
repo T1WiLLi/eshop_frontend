@@ -9,11 +9,15 @@ import Checkout from "./pages/checkout";
 import { useEffect } from "react";
 import { Auth } from "./api/auth";
 import Shop from "./pages/shop";
+import Footer from "./components/Footer";
 
 function App() {
   const location = useLocation();
-  const allowedPaths = ['/', '/detail', '/shop']; // Add more path as we add Route, Add the path that needs to render the NavbarComponent to work
-  const shouldRenderNavbar = allowedPaths.includes(location.pathname);
+  const allowedPathsOnNavbar = ['/', '/detail', '/shop']; // Add more path as we add Route, Add the path that needs to render the NavbarComponent to work
+  const shouldRenderNavbar = allowedPathsOnNavbar.includes(location.pathname);
+
+  const allowedPathOnFooter = ['/', '/detail', '/shop', 'checkout'];
+  const shouldRenderFooter = allowedPathOnFooter.includes(location.pathname);
 
   const handleRefresh = () => {
     Auth.getInstance().refreshSession();
@@ -38,6 +42,7 @@ function App() {
         <Route path="/shop" element={<Shop />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
+      {shouldRenderFooter && <Footer />}
     </>
   );
 }
