@@ -4,6 +4,7 @@
     overflow: hidden;
     max-width: 1300px!important;
     display: flex;
+    flex-direction: column;
     justify-content: center;
 }
 
