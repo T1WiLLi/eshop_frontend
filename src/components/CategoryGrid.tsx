@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Product } from '../interface/product';
-import { Col, Row, Button, Container } from 'react-bootstrap';
+import { Col, Row, Button } from 'react-bootstrap';
 import ProductTemplate from './ProductTemplate';
 import "../styles/components/categoryGrid.css";
 
@@ -33,7 +33,7 @@ function CategoryGrid({ products }: CategoryGridProps) {
     const renderCategoryRow = (category: string, products: Product[]) => {
         const categoryName = category.replace('-', ' ');
         const isExpanded = expandedCategories.includes(category);
-        const initialProductCount = 4; // Number of products to display initially
+        const initialProductCount = 4;
 
         return (
             <React.Fragment key={category}>
@@ -49,7 +49,7 @@ function CategoryGrid({ products }: CategoryGridProps) {
                         </Button>
                     </Col>
                 </Row>
-                <div className="d-flex flex-wrap gap-2 product-row-holder">
+                <div className="container-fluid d-flex gap-2 product-row-holder">
                     {products.map((product, index) => (
                         <Col key={product.id} className="product-col">
                             {(index < initialProductCount || isExpanded) && <ProductTemplate key={product.id} product={product} />}
