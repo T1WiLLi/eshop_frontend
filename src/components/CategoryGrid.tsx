@@ -5,7 +5,7 @@ import ProductTemplate from './ProductTemplate';
 import "../styles/components/categoryGrid.css";
 
 interface CategoryGridProps {
-    products: Product[];
+    products: { [category: string]: Product[] };
 }
 
 function CategoryGrid({ products }: CategoryGridProps) {
@@ -60,19 +60,15 @@ function CategoryGrid({ products }: CategoryGridProps) {
         );
     };
 
-
-    const diverseProducts = products.filter(product => !Object.values(categories).flat().includes(product.category));
-
     return (
         <div className='d-flex flex-column align-items-center'>
-            {Object.entries(categories).map(([category, subCategories]) => {
-                const categoryProducts = products.filter(product => subCategories.includes(product.category));
+            {Object.keys(products).map(category => {
+                const categoryProducts = products[category];
                 if (categoryProducts.length > 0) {
                     return renderCategoryRow(category, categoryProducts);
                 }
                 return null;
             })}
-            {diverseProducts.length > 0 && renderCategoryRow('diverse', diverseProducts)}
         </div>
     );
 }
