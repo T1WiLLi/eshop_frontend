@@ -12,25 +12,26 @@ We welcome contributions from everyone. To contribute to the project, please fol
 
 3. **Install dependencies**:
   cd eShop
+
   npm install
 
-4. Create a **new branch** for your feature or bug fix:
+5. Create a **new branch** for your feature or bug fix:
    git checkout -b my-feature
 
-5. **Make your changes** and ensure they follow our coding conventions.
+6. **Make your changes** and ensure they follow our coding conventions.
 
-6. **Test your changes** locally by running:
+7. **Test your changes** locally by running:
    npm start or npm run dev
 
-7. **Commit** your changes:
+8. **Commit** your changes:
    git add .
    git commit -m "Brief description of your changes"
 
-8. **Push** your changes to your forked repository
+9. **Push** your changes to your forked repository
    git push origin my-feature
 
 
-9. Finally, submit a **pull request** (PR) by navigating to your forked repository on GitHub and clicking the "New pull request" button. Fill out the PR template with details about your changes.
+10. Finally, submit a **pull request** (PR) by navigating to your forked repository on GitHub and clicking the "New pull request" button. Fill out the PR template with details about your changes.
 
 ## Code Guidelines
 
