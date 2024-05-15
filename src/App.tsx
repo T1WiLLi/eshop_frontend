@@ -12,7 +12,7 @@ import Shop from "./pages/shop";
 
 function App() {
   const location = useLocation();
-  const allowedPaths = ['/', '/detail', '/shop']; // Add more path as we add Route, Add the path that needs to render the NavbarComponent to work
+  const allowedPaths = ['/eshop', '/eshop/detail', '/eshop/shop']; // Add more path as we add Route, Add the path that needs to render the NavbarComponent to work
   const shouldRenderNavbar = allowedPaths.includes(location.pathname);
 
   const handleRefresh = () => {
@@ -30,12 +30,12 @@ function App() {
     <>
       {shouldRenderNavbar && <NavbarComponent />}
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/detail" element={<Detail />} />
-        <Route path="/account" element={<Account />} />
-        <Route path="/checkout" element={<Checkout />} />
-        <Route path="/shop" element={<Shop />} />
+        <Route path="/eshop" element={<Home />} />
+        <Route path="/eshop/login" element={<Login />} />
+        <Route path="/eshop/detail" element={<Detail />} />
+        <Route path="/eshop/account" element={<Account />} />
+        <Route path="/eshop/checkout" element={<Checkout />} />
+        <Route path="/eshop/shop" element={<Shop />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </>

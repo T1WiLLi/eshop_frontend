@@ -12,7 +12,7 @@ const ProductList = () => {
     const navigate = useNavigate();
 
     const handleSeeDetailsClick = (productId: number) => {
-        navigate(`/detail?product=${productId}`);
+        navigate(`/eshop/detail?product=${productId}`);
     }
 
     return (

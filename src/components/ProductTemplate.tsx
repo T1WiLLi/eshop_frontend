@@ -31,7 +31,7 @@ function ProductTemplate({ product }: ProductTemplateProps) {
     };
 
     const handleSeeDetailsClick = (productId: number) => {
-        navigate(`/detail?product=${productId}`);
+        navigate(`/eshop/detail?product=${productId}`);
     }
 
     return (

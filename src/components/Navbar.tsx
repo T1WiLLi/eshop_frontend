@@ -53,7 +53,7 @@ function NavbarComponent() {
                     currentUser.password,
                     120
                 );
-                navigate(`/account?token=${res.token}`);
+                navigate(`eshop/account?token=${res.token}`);
             } catch (error) {
                 console.error("Error logging in:", error);
             }
@@ -63,7 +63,7 @@ function NavbarComponent() {
     return (
         <nav className="navbar navbar-expand-lg" data-bs-theme="dark">
             <Container className="container-fluid">
-                <Link to="/" className="navbar-brand">
+                <Link to="/eshop" className="navbar-brand">
                     eShop<span id="span_lio">Qc</span>
                 </Link>
                 <button className="navbar-toggler collapsed" type="button" data-bs-toggle="collapse"
@@ -75,13 +75,13 @@ function NavbarComponent() {
                 </button>
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <Nav className="navbar-nav ms-auto mb-1 mb-lg-0 align-content-left">
-                        <Nav.Link as={Link} to="/" className="nav-link">Home</Nav.Link>
-                        <Nav.Link as={Link} to="/shop" className="nav-link">Shop</Nav.Link>
-                        <Nav.Link as={Link} to="/checkout" className="nav-link"><Basket /></Nav.Link>
+                        <Nav.Link as={Link} to="/eshop" className="nav-link">Home</Nav.Link>
+                        <Nav.Link as={Link} to="/eshop/shop" className="nav-link">Shop</Nav.Link>
+                        <Nav.Link as={Link} to="/eshop/checkout" className="nav-link"><Basket /></Nav.Link>
                         {currentUser ? (
                             <AccountMenu user={currentUser} onLogout={handleLogout} onAccount={handleAccount} />
                         ) : (
-                            <Nav.Link as={Link} to="/login">
+                            <Nav.Link as={Link} to="/eshop/login">
                                 Login
                             </Nav.Link>
                         )}

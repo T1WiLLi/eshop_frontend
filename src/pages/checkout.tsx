@@ -40,7 +40,7 @@ function checkout() {
             ) : (
                 <p>Your basket is empty.</p>
             )}
-            <Link to="/">Go to Home</Link>
+            <Link to="/eshop">Go to Home</Link>
         </div>
     );
 }
