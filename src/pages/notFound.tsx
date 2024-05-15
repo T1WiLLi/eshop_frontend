@@ -21,7 +21,7 @@ function NotFound({ statusCode = 404, message = "The page you are looking for do
         <div style={styles.container}>
             <h1 style={styles.heading}>{`${statusCode} - ${statusMessage}`}</h1>
             <p style={styles.message}>{message}</p>
-            <Link to="/eshop" style={styles.link}>Go to Home</Link>
+            <Link to="/" style={styles.link}>Go to Home</Link>
         </div>
     );
 }

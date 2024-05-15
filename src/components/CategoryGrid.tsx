@@ -11,15 +11,6 @@ interface CategoryGridProps {
 function CategoryGrid({ products }: CategoryGridProps) {
     const [expandedCategories, setExpandedCategories] = useState<string[]>([]);
 
-    const categories = {
-        electronic: ['smartphones', 'laptops', 'automotive', 'motorcycle'],
-        'skin-care': ['fragrances', 'skincare'],
-        'home-decoration': ['home-decoration', 'furniture', 'lighting'],
-        groceries: ['groceries'],
-        accessories: ['mens-watches', 'womens-watches', 'womens-bags', 'womens-jewellery', 'sunglasses'],
-        clothes: ['womens-dresses', 'mens-shirts', 'tops']
-    };
-
     const toggleCategoryExpansion = (category: string) => {
         setExpandedCategories(prevState => {
             if (prevState.includes(category)) {
@@ -37,8 +28,8 @@ function CategoryGrid({ products }: CategoryGridProps) {
 
         return (
             <React.Fragment key={category}>
-                <Row className="flex-row category-title" onClick={() => toggleCategoryExpansion(category)} style={{ cursor: 'pointer' }}>
-                    <Col className="d-flex" style={{ flex: 'none' }}>
+                <Row className="flex-row category-title">
+                    <Col className="d-flex w-75" style={{ flex: 'none', cursor: 'pointer' }} onClick={() => toggleCategoryExpansion(category)}>
                         <h3>{categoryName.toUpperCase()}</h3>
                         <Button variant="link">
                             {isExpanded ? (
@@ -61,7 +52,7 @@ function CategoryGrid({ products }: CategoryGridProps) {
     };
 
     return (
-        <div className='d-flex flex-column align-items-center'>
+        <div className='d-flex flex-column align-items-center justify-content-center'>
             {Object.keys(products).map(category => {
                 const categoryProducts = products[category];
                 if (categoryProducts.length > 0) {

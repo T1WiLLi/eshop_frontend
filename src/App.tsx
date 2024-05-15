@@ -9,11 +9,15 @@ import Checkout from "./pages/checkout";
 import { useEffect } from "react";
 import { Auth } from "./api/auth";
 import Shop from "./pages/shop";
+import Footer from "./components/Footer";
 
 function App() {
   const location = useLocation();
-  const allowedPaths = ['/eshop', '/eshop/detail', '/eshop/shop']; // Add more path as we add Route, Add the path that needs to render the NavbarComponent to work
-  const shouldRenderNavbar = allowedPaths.includes(location.pathname);
+  const allowedPathsOnNavbar = ['/', '/detail', '/shop']; // Add more path as we add Route, Add the path that needs to render the NavbarComponent to work
+  const shouldRenderNavbar = allowedPathsOnNavbar.includes(location.pathname);
+
+  const allowedPathOnFooter = ['/', '/detail', '/shop', 'checkout'];
+  const shouldRenderFooter = allowedPathOnFooter.includes(location.pathname);
 
   const handleRefresh = () => {
     Auth.getInstance().refreshSession();
@@ -30,14 +34,15 @@ function App() {
     <>
       {shouldRenderNavbar && <NavbarComponent />}
       <Routes>
-        <Route path="/eshop" element={<Home />} />
-        <Route path="/eshop/login" element={<Login />} />
-        <Route path="/eshop/detail" element={<Detail />} />
-        <Route path="/eshop/account" element={<Account />} />
-        <Route path="/eshop/checkout" element={<Checkout />} />
-        <Route path="/eshop/shop" element={<Shop />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/detail" element={<Detail />} />
+        <Route path="/account" element={<Account />} />
+        <Route path="/checkout" element={<Checkout />} />
+        <Route path="/shop" element={<Shop />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
+      {shouldRenderFooter && <Footer />}
     </>
   );
 }
