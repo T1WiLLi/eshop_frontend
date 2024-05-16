@@ -16,13 +16,14 @@ function promPage() {
                 setUsername(user.firstName + " " + user.lastName);
             } catch (error: any) {
                 console.log(`Error fetching product data: ${error.message}`);
+                navigate("/");
             }
         };
         getUsername();
     }, []);
 
     const handleNavigate = () => {
-        navigate("/checkout");
+        navigate("/");
     }
 
     return (
