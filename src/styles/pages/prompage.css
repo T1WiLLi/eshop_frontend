@@ -1,0 +1,96 @@
+.pricing-style-one .primary-btn {
+    background: #007bff;
+    color: #ffffff; 
+    box-shadow: 0 10px 30px rgba(0, 123, 255, 0.2);
+}
+.pricing-style-one .active.primary-btn, .pricing-style-one .primary-btn:hover, .pricing-style-one .primary-btn:focus {
+    background: #0056b3;
+    color: #ffffff; 
+    box-shadow: 0 20px 40px rgba(0, 123, 255, 0.4); 
+}
+.pricing-style-one .deactive.primary-btn {
+    background: #ced4da;
+    color: #343a40;
+    pointer-events: none;
+}
+
+.pricing-one {
+    padding: 40px 0;
+}
+
+.pricing-style-one {
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    padding: 45px 30px;
+    border-radius: 8px;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    background-color: #ffffff;
+    margin-top: 20px;
+}
+@media only screen and (min-width: 768px) and (max-width: 991px), (max-width: 767px) {
+  .pricing-style-one {
+    padding: 35px 30px;
+  }
+}
+.pricing-style-one .sub-title {
+    font-size: 16px;
+    color: #000000;
+    position: relative;
+    padding: 6px 20px;
+    display: inline-block;
+    border: 2px solid #007bff;
+    border-radius: 30px;
+}
+.pricing-style-one .price {
+    display: block;
+    font-size: 55px;
+    font-weight: 600;
+    line-height: 80px;
+    margin-top: 25px;
+    color: #000000;
+}
+@media (max-width: 767px) {
+  .pricing-style-one .price {
+    font-size: 45px;
+    margin-top: 16px;
+  }
+}
+@media only screen and (min-width: 576px) and (max-width: 767px) {
+  .pricing-style-one .price {
+    font-size: 50px;
+    margin-top: 20px;
+  }
+}
+.pricing-style-one .year {
+    color: #343a40;
+    margin-top: 3px;
+}
+.pricing-style-one .pricing-list {
+    margin-top: 40px;
+}
+.pricing-style-one .pricing-list li {
+    color: #343a40;
+    margin-top: 16px;
+}
+.pricing-style-one .pricing-list li i {
+    color: #007bff;
+    margin-right: 8px;
+}
+.pricing-style-one .pricing-btn {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 5%;
+}
+.pricing-style-one .bottom-shape {
+    position: absolute;
+    bottom: -20px;
+    left: 0;
+    width: 101%;
+    z-index: -1;
+}
+
+.card-element {
+    min-height: 720px!important;
+}
