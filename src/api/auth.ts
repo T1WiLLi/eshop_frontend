@@ -13,7 +13,7 @@ export class Auth { // Singleton
 
     private constructor() {
         this.apiUrl = 'https://dummyjson.com/auth';
-        this.token = null;
+        this.token = (Cookie.getToken()) ? Cookie.getToken() : null;
     }
 
     public static getInstance(): Auth {

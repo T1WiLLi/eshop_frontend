@@ -19,12 +19,12 @@ function Footer() {
     }
 
     return (
-        <footer className="footer mt-5 py-3 d-flex align-items-center">
+        <footer className="footer position-relative mt-5 py-3 d-flex align-items-center">
             <Container>
                 <Row>
                     <Col md={12} className="d-flex">
                         <p className="footer__copyright mb-0 d-flex align-items-center">&copy; William Beaudin 2024</p>
-                        <ul className="footer__social-links p-0 d-flex align-items-center ms-auto mb-0 gap-4">
+                        <ul className="footer__social-links p-0 flex-wrap d-flex align-items-center ms-auto mb-0 gap-4">
                             {icons.map((icon, index) => (
                                 <li key={index}>
                                     <a href="#">

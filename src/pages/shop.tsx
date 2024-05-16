@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Fetcher } from "../api/fetch";
 import CategoryGrid from "../components/CategoryGrid";
 import { Product } from "../interface/product";
-import "../styles/components/shop.css";
+import "../styles/pages/shop.css";
 import { Container } from "react-bootstrap";
 import SearchBar from "../components/SearchBar";
 

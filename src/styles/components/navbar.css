@@ -15,6 +15,10 @@
     background: var(--normalize-color);
 }
 
+.navbar.sticky a {
+    color: var(--bg-color)!important;
+}
+
 .navbar .container-fluid{
     width: 1300px!important;
     max-width: 1300px!important;
@@ -43,7 +47,7 @@
 }
 
 .span-sticky{
-    color: var(--text-color)!important;
+    color: var(--bg-color)!important;
 }
 
 .navbar .navbar-nav .nav-link {
@@ -142,7 +146,7 @@
 
 .middle-bar {
     margin: 5px auto;
-    background-color: #fff;
+    background-color: #222;
 }
 
 .navbar-toggler .top-bar {

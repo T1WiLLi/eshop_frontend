@@ -10,8 +10,8 @@
     --white: #fff;
     --black: #000;
 
-    --bg-color: #222;
-    --text-color: #fff;
+    --bg-color: #fff;
+    --text-color: #222;
     --card-bg-color: #fff;
     --card-text-color: #222;
     --card-shadow: 0 0px 0px rgba(0, 0, 0, 0.4);
@@ -44,8 +44,9 @@ dd {
   margin: 0;
 }
 
+
 html, body {
-    min-height: 100vh;
+    margin: 0;
 }
 
 html:focus-within {
@@ -55,8 +56,9 @@ html:focus-within {
 body {
     text-rendering: optimizeSpeed;
     line-height: 1.5;
-    background-color: #999!important;
+    background-color: var(--bg-color);
     font-family: Raleway, sans-serif;
+    overflow: auto;
 }
 
 a:not([class]) {

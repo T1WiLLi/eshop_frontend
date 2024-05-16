@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import "../styles/pages/notfound.css";
 
 interface StatusMessage {
     number: number;
@@ -18,45 +19,27 @@ function NotFound({ statusCode = 404, message = "The page you are looking for do
     const statusMessage = statusMessages.find(msg => msg.number === statusCode)?.message || message;
 
     return (
-        <div style={styles.container}>
-            <h1 style={styles.heading}>{`${statusCode} - ${statusMessage}`}</h1>
-            <p style={styles.message}>{message}</p>
-            <Link to="/" style={styles.link}>Go to Home</Link>
-        </div>
+        <section className="error-area error-one">
+            <div className="container">
+                <div className="row justify-content-center">
+                    <div className="col-xxl-7 col-xl-8 col-lg-8">
+                        <div className="error-content text-center">
+                            <span className={`error`}>{statusCode}</span>
+                            <h5 className="sub-title">{statusMessage}</h5>
+                            <p className="text">
+                                {message}
+                            </p>
+                            <div className="error-form">
+                                <Link to="/">Go to Home</Link>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
     );
 }
 
 // Don't usually do this !!!
-
-const styles: { [key: string]: React.CSSProperties } = {
-    container: {
-        position: 'absolute',
-        left: '50%',
-        top: '50%',
-        transform: 'translate(-50%, -50%)',
-        textAlign: 'center',
-        color: 'white',
-        backgroundColor: 'black',
-        padding: '20px',
-        borderRadius: '10px',
-        maxWidth: '400px',
-        display: 'block'
-    },
-    heading: {
-        fontSize: '48px',
-        marginBottom: '20px'
-    },
-    message: {
-        fontSize: '18px',
-        marginBottom: '20px'
-    },
-    link: {
-        fontSize: '18px',
-        color: 'blue',
-        textDecoration: 'underline'
-    }
-};
-
-
 
 export default NotFound
