@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom"
 import { User } from "../interface/user";
 import { Auth } from "../api/auth";
-import "../styles/components/accounts.css";
+import "../styles/pages/accounts.css";
 import { Container, Row, Col, Card } from "react-bootstrap";
 import NotFound from "./notFound";
 

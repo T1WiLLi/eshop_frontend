@@ -2,15 +2,16 @@ import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Fetcher } from "../api/fetch";
 import { Product } from "../interface/product";
-import "../styles/components/details.css";
+import { Container, Row, Col, Image, Button, Carousel } from "react-bootstrap";
 import { useBasket } from "../context/BasketContext";
+import "../styles/pages/details.css";
+import { Category } from "../lib/Category";
 
 const Detail = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const searchParams = new URLSearchParams(location.search);
     const productString = searchParams.get("product");
-
     const { addToBasket } = useBasket();
 
     const [product, setProduct] = useState<Product | null>(null);
@@ -35,13 +36,30 @@ const Detail = () => {
                 setError(`Error fetching product data: ${error.message}`);
             }
         };
-
         fetchProduct();
     }, [productString]);
 
     const handleBuyNow = () => {
         navigate("/checkout", { state: { product } });
-    }
+    };
+
+    const renderStars = (rating: number) => {
+        const stars = [];
+        const roundedRating = Math.floor(rating);
+
+        for (let i = 0; i < 5; i++) {
+            if (i < roundedRating) {
+                stars.push(
+                    <i key={i} className="fa-solid fa-star" style={{ color: "#FFD43B" }}></i>
+                );
+            } else {
+                stars.push(
+                    <i key={i} className="fa-regular fa-star" style={{ color: "#FFD43B" }}></i>
+                );
+            }
+        }
+        return stars;
+    };
 
     if (error) {
         return <div>{error}</div>;
@@ -52,52 +70,64 @@ const Detail = () => {
     }
 
     return (
-        <div className="product-detail-page">
-            <div className="product-detail-header">
-                <img src={product.thumbnail} alt={product.title} />
-                <h1>{product.title}</h1>
-                <p className="price">${product.price}</p>
-            </div>
-            <div className="product-detail-information">
-                <h2>Product Details</h2>
-                <ul>
-                    <li>
-                        <span className="product-detail-key">Brand:</span>
-                        {product.brand}
-                    </li>
-                    <li>
-                        <span className="product-detail-key">Category:</span>
-                        {product.category}
-                    </li>
-                    <li>
-                        <span className="product-detail-key">Description:</span>
-                        {product.description}
-                    </li>
-                    <li>
-                        <span className="product-detail-key">Rating:</span>
-                        {product.rating} / 5 stars
-                    </li>
-                    <li>
-                        <span className="product-detail-key">Stock:</span>
-                        {product.stock} units available
-                    </li>
-                </ul>
-            </div>
-            <div className="product-detail-images">
-                <h2>Product Images</h2>
-                <ul>
-                    {product.images.map((image, index) => (
-                        <li key={index}>
-                            <img src={image} alt={product.title} />
-                        </li>
-                    ))}
-                </ul>
-            </div>
-            <div className="product-detail-actions">
-                <button onClick={handleBuyNow} className="buy-button">Buy Now</button>
-                <button onClick={() => addToBasket(product)} className="add-to-cart-button">Add to Cart</button>
-            </div>
-        </div>
+        <Container className="product-detail-page">
+            <Row className="d-flex align-items-stretch">
+                <Col md={6} className="d-flex flex-column">
+                    <div className="image-container flex-fill">
+                        <Image src={product.thumbnail} fluid />
+                    </div>
+                </Col>
+                <Col md={6} className="d-flex flex-column justify-content-between">
+                    <div>
+                        <h1>{product.title}</h1>
+                        <p className="price">${product.price}</p>
+                        <hr />
+                        <h4>Product Details</h4>
+                        <ul>
+                            <li>
+                                <strong>Brand:</strong> {product.brand}
+                            </li>
+                            <li>
+                                <strong>Category:</strong> {Category.getIcon(product.category)}
+                            </li>
+                            <li>
+                                <strong>Description:</strong> {product.description}
+                            </li>
+                            <li>
+                                <strong>Rating:</strong> {renderStars(product.rating)}
+                            </li>
+                            <li>
+                                <strong>Stock:</strong> {product.stock} units available
+                            </li>
+                        </ul>
+                    </div>
+                    <div className="product-detail-actions">
+                        <Button onClick={handleBuyNow} variant="primary" className="me-2">
+                            Buy Now
+                        </Button>
+                        <Button onClick={() => addToBasket(product)} variant="success">
+                            Add to Cart
+                        </Button>
+                    </div>
+                </Col>
+            </Row>
+            <Row className="mt-4">
+                <Col>
+                    <h5>Product Images</h5>
+                    {product.images.length > 1 ? (
+                        <Carousel fade={true} variant="dark">
+                            {product.images.slice(0, -1).map((image, index) => (
+                                <Carousel.Item key={index}>
+                                    <Image src={image} className="carousel-image" fluid />
+                                </Carousel.Item>
+                            ))}
+                        </Carousel>
+                    ) : (
+                        <p>No images available.</p>
+                    )}
+                </Col>
+            </Row>
+        </Container>
     );
 };
 

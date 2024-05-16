@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Auth } from "../api/auth";
 import { AuthResponse } from "../interface/auth";
 import { Col, Container, Form, FormGroup, Row, FormLabel, Button, Alert, FormControl } from "react-bootstrap";
-import "../styles/components/login.css"
+import "../styles/pages/login.css"
 import { Cookie } from "../lib/Cookie";
 
 function Login() {

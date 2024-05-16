@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Product } from "../interface/product";
-import { Row, Col, Button, Form, Dropdown } from "react-bootstrap";
+import { Row, Col, Form, Dropdown } from "react-bootstrap";
 import "../styles/components/searchbar.css";
 
 interface SearchBarProps {
