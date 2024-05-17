@@ -73,6 +73,10 @@
   color: var(--text-color) !important;
 }
 
+.navbar-nav .nav-link.active, .navbar-nav .nav-link.show {
+    color: var(--normalize-color)!important;
+}
+
 .navbar .navbar-nav .nav-link.scroll::before{
     content: '';
     position: absolute;

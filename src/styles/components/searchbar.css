@@ -1,9 +1,13 @@
 .search-bar-container {
-    background-color: rgba(255, 255, 255, 0.2);
+    background-color: #fff;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
     margin-bottom: 2rem;
+}
+
+.search-bar-container input:focus {
+    box-shadow: none!important;
 }
 
 .search-input-container {
@@ -20,7 +24,6 @@
 .search-input:focus {
     border-color: #80bdff;
     outline: none;
-    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
 }
 
 .search-input-placeholder {
@@ -28,8 +31,10 @@
     top: 50%;
     left: 15px;
     transform: translateY(-50%);
+    background-color: transparent;
     transition: all 0.3s ease;
     pointer-events: none;
+    user-select: none;
     color: #6c757d;
 }
 
@@ -37,7 +42,9 @@
 .search-input:not(:placeholder-shown) + .search-input-placeholder {
     top: 10px;
     left: 15px;
-    transform: translateY(-60%);
+    transform: translateY(-118%);
+    padding: 0 10px;
+    background-color: #fff;
     font-size: 10px;
     color: #007bff;
 }
@@ -56,21 +63,21 @@
 .price-input:focus {
     border-color: #80bdff;
     outline: none!important;
-    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
 }
 
 .price-input.focused {
     border-bottom: 1px solid #80bdff;
-    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
 }
 
 .price-input-placeholder {
     position: absolute;
     top: 50%;
     left: 15px;
+    background-color: transparent;
     transform: translateY(-50%);
     transition: all 0.3s ease;
     pointer-events: none;
+    user-select: none;
     color: #6c757d;
 }
 
@@ -78,7 +85,9 @@
 .price-input:not(:placeholder-shown) + .price-input-placeholder {
     top: 10px;
     left: 15px;
-    transform: translateY(-60%);
+    transform: translateY(-118%);
+    padding: 0 10px;
+    background-color: #fff;
     font-size: 10px;
     color: #007bff;
     border: none!important;
@@ -86,9 +95,8 @@
 
 .category-dropdown .category-dropdown-toggle,
 .sort-dropdown .sort-dropdown-toggle {
-    border-radius: 20px;
-    padding-left: 15px;
-    padding-right: 15px;
+    border-radius: 5px;
+    padding: 10px 15px;
 }
 
 .search-button-container {

@@ -9,6 +9,7 @@
 }
 
 .shop-holder {
-    width: fit-content;
+    background-image: linear-gradient(to bottom right, #007bff, #6c757d);
+    width: 100%;
     margin: 0 auto;
 }

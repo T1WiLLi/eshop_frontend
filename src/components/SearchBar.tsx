@@ -189,8 +189,7 @@ function SearchBar({ products, onFilteredProductsChange }: SearchBarProps) {
                                 <Dropdown.Item
                                     key={mainCategory}
                                     onClick={() => handleCategoryChange(mainCategory)}
-                                    active={selectedCategory === mainCategory}
-                                >
+                                    active={selectedCategory === mainCategory}>
                                     {mainCategory.replace('-', ' ')}
                                 </Dropdown.Item>
                             ))}
@@ -206,9 +205,7 @@ function SearchBar({ products, onFilteredProductsChange }: SearchBarProps) {
                             <Dropdown.Item onClick={() => handleSortChange('priceDesc')}>Price (High to Low)</Dropdown.Item>
                             <Dropdown.Item onClick={() => handleSortChange('priceAsc')}>Price (Low to High)</Dropdown.Item>
                             <Dropdown.Item onClick={() => handleSortChange('stockDesc')}>Stock (High to Low)</Dropdown.Item>
-                            <Dropdown.Item onClick={() => handleSortChange('discountDesc')}>
-                                Discount (High to Low)
-                            </Dropdown.Item>
+                            <Dropdown.Item onClick={() => handleSortChange('discountDesc')}>Discount (High to Low)</Dropdown.Item>
                         </Dropdown.Menu>
                     </Dropdown>
                 </Col>

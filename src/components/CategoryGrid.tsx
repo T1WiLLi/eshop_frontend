@@ -30,8 +30,8 @@ function CategoryGrid({ products }: CategoryGridProps) {
             <React.Fragment key={category}>
                 <Row className="flex-row category-title">
                     <Col className="d-flex w-75" style={{ flex: 'none', cursor: 'pointer' }} onClick={() => toggleCategoryExpansion(category)}>
-                        <h3>{categoryName.toUpperCase()}</h3>
-                        <Button variant="link">
+                        <h3 style={{ color: "white" }}>{categoryName.toUpperCase()}</h3>
+                        <Button variant="link" style={{ color: "white" }}>
                             {isExpanded ? (
                                 <i className="fa-solid fa-minus"> See Less</i>
                             ) : (

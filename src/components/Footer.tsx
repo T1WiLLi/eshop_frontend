@@ -19,7 +19,7 @@ function Footer() {
     }
 
     return (
-        <footer className="footer position-relative mt-5 py-3 d-flex align-items-center">
+        <footer className="footer position-relative py-3 d-flex align-items-center">
             <Container>
                 <Row>
                     <Col md={12} className="d-flex">
