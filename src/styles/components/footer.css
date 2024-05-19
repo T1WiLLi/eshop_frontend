@@ -1,28 +1,71 @@
 .footer {
-    background-color: #222;
-    width: 100%;
-    min-height: 70px;
-    height: auto;
-    border-top: 2px solid var(--primary-color);
-    color: #fff;
+  background-color: #222;
+  width: 100%;
+  min-height: 70px;
+  height: auto;
+  border-top: 2px solid var(--primary-color);
+  color: #fff;
+}
+
+.footer__header {
+  margin-bottom: 20px;
+}
+
+.footer__header h2 {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.footer__about h3,
+.footer__subscription h3,
+.footer__links h3 {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.footer__subscription form {
+  display: flex;
+}
+
+.footer__subscription input[type="email"] {
+  flex: 1;
+  margin-right: 10px;
+}
+
+.footer__links ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer__links ul li {
+  margin-bottom: 5px;
+}
+
+.footer__links ul li a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.footer__links ul li a:hover {
+  color: var(--primary-color);
 }
 
 .footer__copyright {
-    float: left;
-    font-family: var(--title-font);
+  float: left;
+  font-family: var(--title-font);
 }
 
 .footer__social-links {
-    list-style-type: none;
+  list-style-type: none;
 }
 
 .footer__social-links i {
-    font-size: 1.5em;
-    color: #fff;
+  font-size: 1.5em;
+  color: #fff;
 }
-
 
 .footer__social-links i:hover {
-    color: var(--primary-color);
+  color: var(--primary-color);
 }
-
