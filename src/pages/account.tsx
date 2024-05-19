@@ -21,20 +21,22 @@ function Account() {
         const fetchUser = async () => {
             try {
                 const auth = Auth.getInstance()
-                const sessionToken = Cookie.getToken();
                 if (token) {
                     const user = await auth.getCurrentUser(token);
                     setUser(user);
-                } else if (sessionToken) { // Use the session token if token in url is not provided, make use reroute, making available the '/Account' route, instead of '/Account?token=?'
-                    const user = await auth.getCurrentUser(sessionToken);
-                    setUser(user);
+                } else { // Use the session token if token in url is not provided, make use reroute, making available the '/Account' route, instead of '/Account?token=?'
+                    const sessionToken = Cookie.getToken();
+                    if (sessionToken) {
+                        const user = await auth.getCurrentUser(sessionToken);
+                        setUser(user);
 
-                    // Update the URL with the session token
-                    const newUrl = new URL(window.location.href);
-                    newUrl.searchParams.set('token', sessionToken);
-                    window.history.replaceState(null, '', newUrl.toString());
-                } else {
-                    setError("No token provided in the URL.");
+                        // Update the URL with the session token
+                        const newUrl = new URL(window.location.href);
+                        newUrl.searchParams.set('token', sessionToken);
+                        window.history.replaceState(null, '', newUrl.toString());
+                    } else {
+                        setError("No Token found in either the URL, or as the Session Token.");
+                    }
                 }
             } catch (error: any) {
                 setError(`Error fetching user data: ${error.message}`);
