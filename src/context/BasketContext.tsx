@@ -3,6 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import { Product } from '../interface/product';
 import { Fetcher } from '../api/fetch';
 import { BasketContextValue } from '../interface/Basket';
+import { ToastContainer, Toast, ToastBody } from 'react-bootstrap';
+import "./css.css";
+
+
 
 const BasketContext = createContext<BasketContextValue>({
     products: [],
@@ -15,6 +19,9 @@ const BasketContext = createContext<BasketContextValue>({
 });
 
 export const BasketProvider = ({ children }: { children: React.ReactNode }) => {
+    const [showToast, setShowToast] = useState(false);
+    const [toastDetails, setToastDetails] = useState({ name: '', price: 0, amount: 0 });
+
     const [products, setProducts] = useState<{ product: Product; amount: number }[]>(() => {
         const storedProducts = localStorage.getItem('basket');
         return storedProducts ? JSON.parse(storedProducts) : [];
@@ -50,15 +57,27 @@ export const BasketProvider = ({ children }: { children: React.ReactNode }) => {
     const addToBasket = (product: Product) => {
         setProducts((prevProducts) => {
             const existingProductIndex = prevProducts.findIndex((item) => item.product.id === product.id);
-            if (existingProductIndex !== -1) {
-                return prevProducts.map((item, index) =>
-                    index === existingProductIndex ? { ...item, amount: item.amount + 1 } : item
-                );
-            } else {
-                return [...prevProducts, { product, amount: 1 }];
-            }
+            const updatedProducts = existingProductIndex !== -1
+                ? prevProducts.map((item, index) => index === existingProductIndex
+                    ? { ...item, amount: item.amount + 1 }
+                    : item
+                )
+                : [...prevProducts, { product, amount: 1 }];
+
+            const isNewProduct = existingProductIndex === -1;
+            const currentAmount = isNewProduct ? 1 : updatedProducts[existingProductIndex].amount;
+
+            setToastDetails({
+                name: product.title,
+                price: product.price,
+                amount: currentAmount
+            });
+            setShowToast(true);
+
+            return updatedProducts;
         });
     };
+
 
     const handleIncrement = (productId: number) => {
         setProducts((prevProducts) =>
@@ -101,6 +120,31 @@ export const BasketProvider = ({ children }: { children: React.ReactNode }) => {
     return (
         <BasketContext.Provider value={basket}>
             {children}
+            <ToastContainer
+                position="bottom-end"
+                className="p-3"
+                style={{
+                    position: 'fixed',
+                    bottom: '16px',
+                    right: '16px',
+                    zIndex: 1080,
+                }}>
+                <Toast
+                    show={showToast}
+                    onClose={() => setShowToast(false)}
+                    delay={3000}
+                    autohide
+                    className="custom-toast">
+                    <Toast.Header>
+                        <strong className="me-auto">Added to Basket</strong>
+                    </Toast.Header>
+                    <ToastBody className="custom-toast-body">
+                        <p>
+                            {toastDetails.name} - ${toastDetails.price.toFixed(2)} x {toastDetails.amount}
+                        </p>
+                    </ToastBody>
+                </Toast>
+            </ToastContainer>
         </BasketContext.Provider>
     );
 };
