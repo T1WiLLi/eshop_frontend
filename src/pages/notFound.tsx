@@ -19,7 +19,7 @@ function NotFound({ statusCode = 404, message = "The page you are looking for do
     const statusMessage = statusMessages.find(msg => msg.number === statusCode)?.message || message;
 
     return (
-        <section className="error-area error-one">
+        <section className="error-area error-one h-100">
             <div className="container">
                 <div className="row justify-content-center">
                     <div className="col-xxl-7 col-xl-8 col-lg-8">
