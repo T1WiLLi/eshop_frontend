@@ -5,6 +5,7 @@ import { Auth } from "../api/auth";
 import "../styles/pages/accounts.css";
 import { Container, Row, Col, Card, ListGroup, Button } from "react-bootstrap";
 import NotFound from "./notFound";
+import { Cookie } from "../lib/Cookie";
 
 
 function Account() {
@@ -20,16 +21,25 @@ function Account() {
         const fetchUser = async () => {
             try {
                 const auth = Auth.getInstance()
+                const sessionToken = Cookie.getToken();
                 if (token) {
                     const user = await auth.getCurrentUser(token);
                     setUser(user);
+                } else if (sessionToken) { // Use the session token if token in url is not provided, make use reroute, making available the '/Account' route, instead of '/Account?token=?'
+                    const user = await auth.getCurrentUser(sessionToken);
+                    setUser(user);
+
+                    // Update the URL with the session token
+                    const newUrl = new URL(window.location.href);
+                    newUrl.searchParams.set('token', sessionToken);
+                    window.history.replaceState(null, '', newUrl.toString());
                 } else {
                     setError("No token provided in the URL.");
                 }
             } catch (error: any) {
                 setError(`Error fetching user data: ${error.message}`);
             }
-        }
+        };
 
         fetchUser();
     }, [token]);
