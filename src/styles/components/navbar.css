@@ -33,7 +33,7 @@
 }
 
 .navbar .navbar-brand{
-    color: var(--text-color)!important;
+    color: var(--white)!important;
     font-size: 2.5em;
     font-weight: 700;
 }
@@ -43,7 +43,7 @@
 }
 
 .navbar.sticky .navbar-brand {
-    color: var(--text-color);
+    color: var(--white);
 }
 
 .span-sticky{
@@ -53,7 +53,7 @@
 .navbar .navbar-nav .nav-link {
     position: relative;
     display: inline-block;
-    color: var(--text-color);
+    color: var(--white);
     font-size: 1.2em;
     font-weight: 500;
     padding: 4px!important;
