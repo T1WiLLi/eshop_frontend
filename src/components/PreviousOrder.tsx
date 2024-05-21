@@ -5,6 +5,7 @@ import Card from "react-bootstrap/esm/Card";
 import ListGroup from "react-bootstrap/esm/ListGroup";
 import Button from "react-bootstrap/esm/Button";
 import "../styles/components/previousOrder.css";
+import { CartItem, Order } from "../interface/Orders";
 
 const PreviousOrders: React.FC = () => {
     const [previousOrders, setPreviousOrders] = useState<Order[]>([]);
@@ -88,7 +89,7 @@ const PreviousOrders: React.FC = () => {
                         </span>
                     ) : (
                         <span>
-                            <i className="fa-solid fa-plus me-3"></i> See More
+                            <i className="fa-solid fa-plus me-3"></i> See More ({previousOrders.length - 3}+)
                         </span>
                     )}
                 </Button>
