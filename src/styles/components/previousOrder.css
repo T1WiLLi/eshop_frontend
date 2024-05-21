@@ -1,0 +1,48 @@
+.previous-orders-card {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.previous-orders-header {
+    background-color: #343a40;
+    color: #fff;
+    font-weight: bold;
+    padding: 12px 16px;
+    font-size: 1.25rem;
+}
+
+.previous-orders-list {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.previous-orders-item {
+    padding: 16px;
+    border-bottom: 1px solid #ddd;
+    transition: background-color 0.3s ease;
+}
+
+.previous-orders-item:hover {
+    background-color: #f8f9fa;
+}
+
+.order-products {
+    margin-top: 8px;
+}
+
+.product-item {
+    margin-bottom: 4px;
+}
+
+.previous-orders-footer {
+    background-color: #f8f9fa;
+}
+
+.toggle-btn {
+    font-weight: bold;
+}
+
+.toggle-btn i {
+    margin-right: 8px;
+}
