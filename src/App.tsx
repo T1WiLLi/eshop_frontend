@@ -11,6 +11,7 @@ import { Auth } from "./api/auth";
 import Shop from "./pages/shop";
 import Footer from "./components/Footer";
 import PromPage from "./pages/promPage";
+import Rules from "./pages/rules";
 
 function App() {
   const navigate = useNavigate();
@@ -54,6 +55,7 @@ function App() {
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/shop" element={<Shop />} />
         <Route path="/promotion" element={<PromPage />} />
+        <Route path="/rules" element={<Rules />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       {shouldRenderFooter && <Footer />}

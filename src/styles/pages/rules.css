@@ -1,0 +1,97 @@
+.rules-page {
+  padding: 2rem 0;
+}
+
+.rules-page h1 {
+  font-weight: bold;
+  color: #333;
+}
+
+.rules-page .card {
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+.rules-page .card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.rules-page .card-title {
+  font-weight: bold;
+  color: #333;
+}
+
+.rules-page .card-text {
+  color: #666;
+}
+
+.rules-page .tooltip-icon,
+.rules-page .tooltip-text {
+  cursor: pointer;
+}
+
+.rules-page .tooltip-text {
+  font-weight: bold;
+}
+
+.rules-page .legal-disclaimer {
+  background-color: #f8f8f8;
+  padding: 1rem;
+  border-radius: 4px;
+}
+
+.rules-page .legal-disclaimer p {
+  margin-bottom: 0.5rem;
+}
+
+.rules-page .accordion-button {
+  background-color: #f8f8f8;
+  color: #333;
+  font-weight: bold;
+}
+
+.rules-page .accordion-button:not(.collapsed) {
+  background-color: #e9ecef;
+  color: #333;
+}
+
+.rules-page .accordion-item {
+  border: none;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+}
+
+.rules-page .accordion-item .accordion-header {
+  border-bottom: 1px solid #ddd;
+}
+
+.rules-page .accordion-item .accordion-body {
+  background-color: #ffffff;
+  border-top: none;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.rules-page .accordion-item .accordion-header button {
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.rules-page .accordion-item .accordion-header button:focus {
+  box-shadow: none;
+}
+
+.rules-page .accordion-item .accordion-body ul {
+  padding-left: 20px;
+}
+
+.rules-page .accordion-item .accordion-body ul li {
+  margin-bottom: 10px;
+}
+
+/* Responsive styles */
+@media (max-width: 767px) {
+  .rules-page h1 {
+    font-size: 1.5rem;
+  }
+}

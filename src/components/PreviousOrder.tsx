@@ -7,7 +7,7 @@ import Button from "react-bootstrap/esm/Button";
 import "../styles/components/previousOrder.css";
 import { CartItem, Order } from "../interface/Orders";
 
-const PreviousOrders: React.FC = () => {
+const PreviousOrders = () => {
     const [previousOrders, setPreviousOrders] = useState<Order[]>([]);
     const [showAll, setShowAll] = useState(false);
 
