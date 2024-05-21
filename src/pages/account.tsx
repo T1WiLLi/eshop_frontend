@@ -6,6 +6,7 @@ import "../styles/pages/accounts.css";
 import { Container, Row, Col, Card, ListGroup, Button } from "react-bootstrap";
 import NotFound from "./notFound";
 import { Cookie } from "../lib/Cookie";
+import PreviousOrders from "../components/PreviousOrder";
 
 
 function Account() {
@@ -105,6 +106,7 @@ function Account() {
                             </ListGroup.Item>
                         </ListGroup>
                     </Card>
+                    <PreviousOrders />
                     <div className="d-flex justify-content-between">
                         <Link to="/" className="btn btn-primary">
                             Go to Home
