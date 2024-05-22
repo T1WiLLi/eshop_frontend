@@ -2,11 +2,9 @@ import { createContext, useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Product } from '../interface/product';
 import { Fetcher } from '../api/fetch';
-import { BasketContextValue } from '../interface/Basket';
+import { BasketContextValue, ToastDetails } from '../interface/Basket';
 import { ToastContainer, Toast, ToastBody } from 'react-bootstrap';
 import "./css.css";
-
-
 
 const BasketContext = createContext<BasketContextValue>({
     products: [],
@@ -19,11 +17,11 @@ const BasketContext = createContext<BasketContextValue>({
 });
 
 export const BasketProvider = ({ children }: { children: React.ReactNode }) => {
-    const [showToast, setShowToast] = useState(false);
-    const [toastDetails, setToastDetails] = useState({ name: '', price: 0, amount: 0 });
+    const [showToast, setShowToast] = useState<boolean>(false);
+    const [toastDetails, setToastDetails] = useState<ToastDetails>({ name: '', price: 0, amount: 0 });
 
     const [products, setProducts] = useState<{ product: Product; amount: number }[]>(() => {
-        const storedProducts = localStorage.getItem('basket');
+        const storedProducts = localStorage.getItem('basket') as string | null;
         return storedProducts ? JSON.parse(storedProducts) : [];
     });
 
@@ -32,12 +30,12 @@ export const BasketProvider = ({ children }: { children: React.ReactNode }) => {
     useEffect(() => {
         const handleClick = async (event: MouseEvent) => {
             const clickedElement = event.target as HTMLElement;
-            const productId = clickedElement.dataset.productId;
+            const productId = clickedElement.dataset.productId as string | undefined;
             if (productId) {
                 try {
-                    const product = await new Fetcher().fetchProductFromId(parseInt(productId));
+                    const product = await Fetcher.getInstance().fetchProductFromId(parseInt(productId));
                     addToBasket(product);
-                } catch (error) {
+                } catch (error: any) {
                     console.error('Error fetching product:', error);
                 }
             }
@@ -56,7 +54,7 @@ export const BasketProvider = ({ children }: { children: React.ReactNode }) => {
 
     const addToBasket = (product: Product) => {
         setProducts((prevProducts) => {
-            const existingProductIndex = prevProducts.findIndex((item) => item.product.id === product.id);
+            const existingProductIndex = prevProducts.findIndex((item) => item.product.id === product.id) as number;
             const updatedProducts = existingProductIndex !== -1
                 ? prevProducts.map((item, index) => index === existingProductIndex
                     ? { ...item, amount: item.amount + 1 }
@@ -64,8 +62,8 @@ export const BasketProvider = ({ children }: { children: React.ReactNode }) => {
                 )
                 : [...prevProducts, { product, amount: 1 }];
 
-            const isNewProduct = existingProductIndex === -1;
-            const currentAmount = isNewProduct ? 1 : updatedProducts[existingProductIndex].amount;
+            const isNewProduct = (existingProductIndex === -1) as boolean;
+            const currentAmount = isNewProduct ? 1 : updatedProducts[existingProductIndex].amount as number;
 
             setToastDetails({
                 name: product.title,

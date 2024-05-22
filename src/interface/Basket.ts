@@ -71,3 +71,9 @@ export interface BasketContextValue {
      */
     handleCheckout: () => void;
 }
+
+export interface ToastDetails {
+    name: string;
+    price: number;
+    amount: number;
+}
