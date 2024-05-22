@@ -16,7 +16,7 @@
 }
 
 .navbar.sticky a {
-    color: var(--bg-color)!important;
+    color: var(--bg-tex)!important;
 }
 
 .navbar .container-fluid{
@@ -33,7 +33,7 @@
 }
 
 .navbar .navbar-brand{
-    color: var(--white)!important;
+    color: var(--black)!important;
     font-size: 2.5em;
     font-weight: 700;
 }
@@ -43,7 +43,7 @@
 }
 
 .navbar.sticky .navbar-brand {
-    color: var(--white);
+    color: var(--black);
 }
 
 .span-sticky{
@@ -53,7 +53,7 @@
 .navbar .navbar-nav .nav-link {
     position: relative;
     display: inline-block;
-    color: var(--white);
+    color: var(--black);
     font-size: 1.2em;
     font-weight: 500;
     padding: 4px!important;

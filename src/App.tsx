@@ -19,7 +19,7 @@ function App() {
   const allowedPathsOnNavbar = ['/', '/detail', '/shop']; // Add more path as we add Route, Add the path that needs to render the NavbarComponent to work
   const shouldRenderNavbar = allowedPathsOnNavbar.includes(location.pathname);
 
-  const allowedPathOnFooter = ['/', '/detail', '/shop', 'checkout', '/account'];
+  const allowedPathOnFooter = ['/', '/detail', '/shop', 'checkout'];
   const shouldRenderFooter = allowedPathOnFooter.includes(location.pathname);
 
   const handleRefresh = () => {

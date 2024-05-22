@@ -7,6 +7,7 @@ import { Container, Row, Col, Card, ListGroup, Button } from "react-bootstrap";
 import NotFound from "./notFound";
 import { Cookie } from "../lib/Cookie";
 import PreviousOrders from "../components/PreviousOrder";
+import Footer from "../components/Footer";
 
 
 function Account() {
@@ -56,66 +57,69 @@ function Account() {
     }
 
     return (
-        <Container>
-            <Row className="justify-content-center mt-5 mb-5">
-                <Col xs={12} md={8}>
-                    <AccountInfo user={user} />
-                    <Card className="mb-3">
-                        <Card.Header>Additional Information</Card.Header>
-                        <ListGroup variant="flush">
-                            <ListGroup.Item>
-                                <strong>Maiden Name:</strong> {user.maidenName}
-                            </ListGroup.Item>
-                            <ListGroup.Item>
-                                <strong>Blood Group:</strong> {user.bloodGroup}
-                            </ListGroup.Item>
-                            <ListGroup.Item>
-                                <strong>Height:</strong> {user.height} cm
-                            </ListGroup.Item>
-                            <ListGroup.Item>
-                                <strong>Weight:</strong> {user.weight} kg
-                            </ListGroup.Item>
-                            <ListGroup.Item>
-                                <strong>Eye Color:</strong> {user.eyeColor}
-                            </ListGroup.Item>
-                            <ListGroup.Item>
-                                <strong>Hair Color:</strong> {user.hair.color}
-                            </ListGroup.Item>
-                            <ListGroup.Item>
-                                <strong>Hair Type:</strong> {user.hair.type}
-                            </ListGroup.Item>
-                        </ListGroup>
-                    </Card>
-                    <Card className="mb-3">
-                        <Card.Header>Financial Information</Card.Header>
-                        <ListGroup variant="flush">
-                            <ListGroup.Item>
-                                <strong>Bank:</strong> {user.bank.cardNumber} ({user.bank.cardType})
-                            </ListGroup.Item>
-                            <ListGroup.Item>
-                                <strong>IBAN:</strong> {user.bank.iban}
-                            </ListGroup.Item>
-                            <ListGroup.Item>
-                                <strong>Currency:</strong> {user.bank.currency}
-                            </ListGroup.Item>
-                            <ListGroup.Item>
-                                <strong>EIN:</strong> {user.ein}
-                            </ListGroup.Item>
-                            <ListGroup.Item>
-                                <strong>SSN:</strong> {user.ssn}
-                            </ListGroup.Item>
-                        </ListGroup>
-                    </Card>
-                    <PreviousOrders />
-                    <div className="d-flex justify-content-between">
-                        <Link to="/" className="btn btn-primary">
-                            Go to Home
-                        </Link>
-                        <Button variant="secondary">Settings</Button>
-                    </div>
-                </Col>
-            </Row>
-        </Container>
+        <>
+            <Container>
+                <Row className="justify-content-center mt-5 mb-5">
+                    <Col xs={12} md={8}>
+                        <AccountInfo user={user} />
+                        <Card className="mb-3">
+                            <Card.Header>Additional Information</Card.Header>
+                            <ListGroup variant="flush">
+                                <ListGroup.Item>
+                                    <strong>Maiden Name:</strong> {user.maidenName}
+                                </ListGroup.Item>
+                                <ListGroup.Item>
+                                    <strong>Blood Group:</strong> {user.bloodGroup}
+                                </ListGroup.Item>
+                                <ListGroup.Item>
+                                    <strong>Height:</strong> {user.height} cm
+                                </ListGroup.Item>
+                                <ListGroup.Item>
+                                    <strong>Weight:</strong> {user.weight} kg
+                                </ListGroup.Item>
+                                <ListGroup.Item>
+                                    <strong>Eye Color:</strong> {user.eyeColor}
+                                </ListGroup.Item>
+                                <ListGroup.Item>
+                                    <strong>Hair Color:</strong> {user.hair.color}
+                                </ListGroup.Item>
+                                <ListGroup.Item>
+                                    <strong>Hair Type:</strong> {user.hair.type}
+                                </ListGroup.Item>
+                            </ListGroup>
+                        </Card>
+                        <Card className="mb-3">
+                            <Card.Header>Financial Information</Card.Header>
+                            <ListGroup variant="flush">
+                                <ListGroup.Item>
+                                    <strong>Bank:</strong> {user.bank.cardNumber} ({user.bank.cardType})
+                                </ListGroup.Item>
+                                <ListGroup.Item>
+                                    <strong>IBAN:</strong> {user.bank.iban}
+                                </ListGroup.Item>
+                                <ListGroup.Item>
+                                    <strong>Currency:</strong> {user.bank.currency}
+                                </ListGroup.Item>
+                                <ListGroup.Item>
+                                    <strong>EIN:</strong> {user.ein}
+                                </ListGroup.Item>
+                                <ListGroup.Item>
+                                    <strong>SSN:</strong> {user.ssn}
+                                </ListGroup.Item>
+                            </ListGroup>
+                        </Card>
+                        <PreviousOrders />
+                        <div className="d-flex justify-content-between">
+                            <Link to="/" className="btn btn-primary">
+                                Go to Home
+                            </Link>
+                            <Button variant="secondary">Settings</Button>
+                        </div>
+                    </Col>
+                </Row>
+            </Container>
+            <Footer />
+        </>
     );
 }
 
