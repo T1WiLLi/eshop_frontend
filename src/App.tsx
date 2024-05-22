@@ -11,6 +11,7 @@ import { Auth } from "./api/auth";
 import Shop from "./pages/shop";
 import Footer from "./components/Footer";
 import PromPage from "./pages/promPage";
+import Rules from "./pages/rules";
 
 function App() {
   const navigate = useNavigate();
@@ -18,7 +19,7 @@ function App() {
   const allowedPathsOnNavbar = ['/', '/detail', '/shop']; // Add more path as we add Route, Add the path that needs to render the NavbarComponent to work
   const shouldRenderNavbar = allowedPathsOnNavbar.includes(location.pathname);
 
-  const allowedPathOnFooter = ['/', '/detail', '/shop', 'checkout', '/account'];
+  const allowedPathOnFooter = ['/', '/detail', '/shop', 'checkout'];
   const shouldRenderFooter = allowedPathOnFooter.includes(location.pathname);
 
   const handleRefresh = () => {
@@ -54,6 +55,7 @@ function App() {
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/shop" element={<Shop />} />
         <Route path="/promotion" element={<PromPage />} />
+        <Route path="/rules" element={<Rules />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       {shouldRenderFooter && <Footer />}
