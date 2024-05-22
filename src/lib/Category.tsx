@@ -1,3 +1,5 @@
+import { ReactNode } from "react";
+
 export enum Category {
     'smartphones' = "mobile",
     'laptops' = "laptop",
@@ -22,8 +24,8 @@ export enum Category {
 }
 
 export namespace Category {
-    export function getIcon(category: string): JSX.Element {
-        const iconClass = Category[category as keyof typeof Category];
+    export function getIcon(category: string): ReactNode | React.JSX.Element {
+        const iconClass = Category[category as keyof typeof Category] as Category | ((category: string) => JSX.Element);
         if (!iconClass) {
             return <i className="fa-solid fa-question"></i>;
         }

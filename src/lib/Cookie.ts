@@ -7,7 +7,7 @@ export class Cookie {
         }
     }
 
-    private setToken(token: string): void {
+    private setToken(token: string) {
         const expiryDate = new Date();
         expiryDate.setTime(expiryDate.getTime() + 120 * 60 * 1000); // Expires in 120 minutes
         document.cookie = `${Cookie.tokenName}=${token}; expires=${expiryDate.toUTCString()}; path=/`;
@@ -30,9 +30,11 @@ export class Cookie {
         document.cookie = `${Cookie.tokenName}=; expires=${expiryDate.toUTCString()}; path=/`;
     }
 
-    public refreshExpiry(): void {
+    public refreshExpiry(): boolean {
         if (this.token) {
             this.setToken(this.token); 
+            return true;
         }
+        return false;
     }
 }

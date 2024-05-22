@@ -1,3 +1,4 @@
+import { CartItem, Order } from "../interface/Orders";
 import { Product } from "../interface/product";
 import { User } from "../interface/user";
 
@@ -83,5 +84,31 @@ export function formatProduct(data: any): Product {
         category: data.category,
         thumbnail: data.thumbnail,
         images: data.images
+    };
+}
+
+export function formatOrder(data: any): Order {
+    const { id, products, total, userId } = data;
+    let discountedTotal = total;
+    let totalProducts = 0;
+    let totalQuantity = 0;
+
+
+    products.forEach((product: CartItem) => {
+        const { quantity, price, discountedPrice } = product;
+        totalProducts++;
+        totalQuantity += quantity;
+        discountedTotal += discountedPrice ? discountedPrice * quantity : price * quantity;
+    });
+
+    return {
+        id,
+        products,
+        total,
+        discountedTotal,
+        userId,
+        totalProducts,
+        totalQuantity,
+        purchaseDate: new Date().toISOString()
     };
 }

@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { Product } from "../interface/product";
-import axios from "axios";
 import Card from "react-bootstrap/esm/Card";
 import ListGroup from "react-bootstrap/esm/ListGroup";
 import Button from "react-bootstrap/esm/Button";
 import "../styles/components/previousOrder.css";
 import { CartItem, Order } from "../interface/Orders";
+import { Fetcher } from "../api/fetch";
 
 const PreviousOrders = () => {
     const [previousOrders, setPreviousOrders] = useState<Order[]>([]);
@@ -14,18 +14,27 @@ const PreviousOrders = () => {
     useEffect(() => {
         const fetchPreviousOrders = async () => {
             try {
-                const cartResponse = await axios.get('https://dummyjson.com/carts');
-                const productResponse = await axios.get('https://dummyjson.com/products');
+                const cartResponse = await Fetcher.getInstance().fetchAllCart() as Order[];
+                const productResponse = await Fetcher.getInstance().fetchAllProduct() as Product[];
 
                 const currentDate = new Date();
-                const orders: Order[] = cartResponse.data.carts.map((cart: any, index: number) => {
-                    const products: CartItem[] = cart.products.map((product: any) => ({
-                        ...productResponse.data.products.find((p: Product) => p.id === product.id),
-                        ...product,
-                    }));
+                const orders: Order[] = cartResponse.map((cart: Order, index: number) => {
+                    const products: CartItem[] = cart.products.map((product) => {
+                        const matchingProduct = productResponse.find((p: Product) => p.id === product.id);
+                        return {
+                            id: matchingProduct!.id,
+                            title: matchingProduct!.title,
+                            price: matchingProduct!.price,
+                            quantity: product.quantity,
+                            total: product.total,
+                            discountPercentage: matchingProduct!.discountPercentage,
+                            discountedPrice: product.discountedPrice,
+                            thumbnail: matchingProduct!.thumbnail,
+                        };
+                    });
 
                     const purchaseDate = new Date(
-                        currentDate.getTime() - (cartResponse.data.carts.length - index) * 24 * 60 * 60 * 1000
+                        currentDate.getTime() - (cartResponse.length - index) * 24 * 60 * 60 * 1000
                     );
 
                     return {

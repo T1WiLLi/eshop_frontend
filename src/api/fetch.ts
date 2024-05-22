@@ -1,13 +1,23 @@
 import axios from 'axios';
 import { Product } from "../interface/product";
 import { User } from "../interface/user";
-import { formatProduct, formatUser } from "./apiHelper";
+import { formatOrder, formatProduct, formatUser } from "./apiHelper";
+import { Order } from '../interface/Orders';
 
-export class Fetcher {
+export class Fetcher { // Singleton
+
+    private static instance: Fetcher;
     private apiUrl: string;
 
-    constructor() {
-        this.apiUrl = 'https://dummyjson.com/'; // This can then either be /user or /products
+    private constructor() {
+        this.apiUrl = 'https://dummyjson.com/'; // This can then either be /user or /products or /carts
+    }
+
+    public static getInstance(): Fetcher {
+        if (!Fetcher.instance) {
+            Fetcher.instance = new Fetcher();
+        }
+        return Fetcher.instance;
     }
 
     async fetchAllUser(): Promise<User[]> {
@@ -38,13 +48,22 @@ export class Fetcher {
         }
     }
 
-
     async fetchProductFromId(id: number): Promise<Product> {
         try {
             const res = await axios.get(`${this.apiUrl}products/${id}`);
             return formatProduct(res.data);
         } catch (error: any) {
             throw new Error(`Error fetching product data: ${error.message}`);
+        }
+    }
+
+    async fetchAllCart(): Promise<Order[]> {
+        try {
+            const res = await axios.get(`${this.apiUrl}carts?limit=0`);
+            const orders: Order[] = res.data.carts.map(formatOrder);
+            return orders;
+        } catch (error: any) {
+            throw new Error(`Error fetching cart data: ${error.message}`);
         }
     }
 }

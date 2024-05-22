@@ -2,6 +2,7 @@ import { Card, Button } from "react-bootstrap";
 import { Product } from "../interface/product";
 import "../styles/components/productTemplate.css";
 import { useNavigate } from "react-router-dom";
+import { ReactNode } from "react";
 
 interface ProductTemplateProps {
     product: Product;
@@ -13,7 +14,7 @@ function ProductTemplate({ product }: ProductTemplateProps) {
     const navigate = useNavigate();
 
     const renderStars = (rating: number) => {
-        const stars = [];
+        const stars: ReactNode[] = [];
         const roundedRating = Math.floor(rating);
 
         for (let i = 0; i < 5; i++) {
