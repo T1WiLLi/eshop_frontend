@@ -1,3 +1,4 @@
+import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import { useBasket } from "../context/BasketContext";
 import { Product } from "../interface/product";
 import "../styles/components/basket.css";
@@ -43,14 +44,14 @@ function Basket() {
                 </div>
 
                 <hr />
-                <div className="basket-subtotal d-flex align-items-center justify-content-between font-weight-bold mx-1">
+                <div className="basket-subtotal d-flex align-items-center justify-content-between font-weight-bold mx-1 mt-2">
                     <p>Subtotal:</p>
                     <p>
                         {calculateSubtotal().toLocaleString('en-US', { style: 'currency', currency: 'USD' })}
                     </p>
                 </div>
-                <div onClick={(e) => e.stopPropagation()}>
-                    <button type="button" className="btn btn-primary" onClick={handleCheckout}>Checkout</button>
+                <div className="px-2" onClick={(e) => e.stopPropagation()}>
+                    <button type="button" className="btn btn-primary w-100" onClick={handleCheckout}>Checkout</button>
                 </div>
             </div>
         </div>
@@ -72,26 +73,43 @@ const ProductBasket: React.FC<ProductBasketProps> = ({
             <div className="product-image-container">
                 <img src={product.thumbnail} alt={product.title} />
             </div>
-            <div className="product-details-container">
-                <div className="product-details-header d-flex justify-content-between align-items-center">
+            <div className="product-details-container d-flex flex-column gap-1">
+                <div className="product-details-header d-flex flex-column">
                     <h1>{product.title}</h1>
-                    <div className="details-extra d-flex align-items-center gap-1">
-                        <p className="category-text">{product.category}</p>
+                    <div className="details-extra d-flex align-items-center justify-content-between">
+                        <p className="category-text m-0">{product.category}</p>
                         <div className="product-actions">
-                            <button aria-label="Remove" type="button" onClick={() => onRemove(product.id)}><i className="fa-solid fa-trash"></i></button>
+                            <OverlayTrigger
+                                key="remove-tooltip"
+                                placement="top"
+                                overlay={<Tooltip id={`tooltip-remove`}>Remove</Tooltip>}>
+                                <button aria-label="Remove" type="button" onClick={() => onRemove(product.id)}><i className="fa-solid fa-trash p-0"></i></button>
+                            </OverlayTrigger>
                         </div>
                     </div>
                 </div>
 
                 <div className="product-details-footer d-flex justify-content-between align-items-center">
                     <div className="product-amount d-flex align-items-center">
-                        <button onClick={() => onDecrement(product.id)} disabled={amountOfProduct === 1}>-</button>
+                        <OverlayTrigger
+                            key="decrement-tooltip"
+                            placement="top"
+                            overlay={<Tooltip id={`tooltip-decrement`}>Decrement</Tooltip>}>
+                            <button onClick={() => onDecrement(product.id)} disabled={amountOfProduct === 1}>-</button>
+                        </OverlayTrigger>
+
                         <span>{amountOfProduct}</span>
-                        <button onClick={() => onIncrement(product.id)}>+</button>
+
+                        <OverlayTrigger
+                            key="increment-tooltip"
+                            placement="top"
+                            overlay={<Tooltip id={`tooltip-increment`}>Increment</Tooltip>}>
+                            <button onClick={() => onIncrement(product.id)}>+</button>
+                        </OverlayTrigger>
                     </div>
 
                     <div className="product-price">
-                        <p>{`${(product.price * amountOfProduct).toLocaleString('en-US', { style: 'currency', currency: 'USD' })}`}</p>
+                        <p className="m-0">{`${(product.price * amountOfProduct).toLocaleString('en-US', { style: 'currency', currency: 'USD' })}`}</p>
                     </div>
                 </div>
             </div>
