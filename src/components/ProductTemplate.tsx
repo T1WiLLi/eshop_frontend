@@ -1,19 +1,32 @@
 import { Card, Button } from "react-bootstrap";
 import { Product } from "../interface/product";
-import "../styles/components/productTemplate.css";
 import { useNavigate } from "react-router-dom";
 import { ReactNode } from "react";
 
+/**
+ * Props for the ProductTemplate component.
+ */
 interface ProductTemplateProps {
+    /**
+     * The product data to display.
+     */
     product: Product;
 }
 
+/**
+ * A template for displaying product information in a card format.
+ */
 function ProductTemplate({ product }: ProductTemplateProps) {
     const { id, title, description, price, discountPercentage, rating, stock, thumbnail } = product;
-
     const navigate = useNavigate();
 
-    const renderStars = (rating: number) => {
+    /**
+     * Renders star icons based on the product's rating.
+     * 
+     * @param rating - The rating of the product.
+     * @returns An array of ReactNode elements representing star icons.
+     */
+    const renderStars = (rating: number): ReactNode[] => {
         const stars: ReactNode[] = [];
         const roundedRating = Math.floor(rating);
 
@@ -31,9 +44,14 @@ function ProductTemplate({ product }: ProductTemplateProps) {
         return stars;
     };
 
+    /**
+     * Handles click event to navigate to the product details page.
+     * 
+     * @param productId - The ID of the product.
+     */
     const handleSeeDetailsClick = (productId: number) => {
         navigate(`/detail?product=${productId}`);
-    }
+    };
 
     return (
         <Card className="product-card">

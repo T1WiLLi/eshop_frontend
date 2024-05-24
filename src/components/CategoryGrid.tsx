@@ -4,13 +4,27 @@ import { Col, Row, Button } from 'react-bootstrap';
 import ProductTemplate from './ProductTemplate';
 import "../styles/components/categoryGrid.css";
 
+/**
+ * Props for the CategoryGrid component.
+ */
 interface CategoryGridProps {
+    /**
+     * An object containing products grouped by category.
+     */
     products: { [category: string]: Product[] };
 }
 
+/**
+ * A component that displays products in a grid grouped by category.
+ */
 function CategoryGrid({ products }: CategoryGridProps) {
     const [expandedCategories, setExpandedCategories] = useState<string[]>([]);
 
+    /**
+     * Toggles the expansion of a category.
+     * 
+     * @param category - The category to toggle.
+     */
     const toggleCategoryExpansion = (category: string) => {
         setExpandedCategories(prevState => {
             if (prevState.includes(category)) {
@@ -21,6 +35,13 @@ function CategoryGrid({ products }: CategoryGridProps) {
         });
     };
 
+    /**
+     * Renders a row for a category, including products.
+     * 
+     * @param category - The category name.
+     * @param products - The products in the category.
+     * @returns A JSX element representing the category row.
+     */
     const renderCategoryRow = (category: string, products: Product[]) => {
         const categoryName = category.replace('-', ' ');
         const isExpanded = expandedCategories.includes(category);

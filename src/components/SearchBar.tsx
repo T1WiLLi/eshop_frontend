@@ -3,11 +3,23 @@ import { Product } from "../interface/product";
 import { Row, Col, Form, Dropdown } from "react-bootstrap";
 import "../styles/components/searchbar.css";
 
+/**
+ * Props for the SearchBar component.
+ */
 interface SearchBarProps {
+    /**
+     * The array of products to be filtered.
+     */
     products: Product[];
+    /**
+     * Callback function triggered when filtered products change.
+     */
     onFilteredProductsChange: (filteredProducts: { [category: string]: Product[] }) => void;
 }
 
+/**
+ * A dictionary mapping main categories to their subcategories.
+ */
 const categories: { [key: string]: string[] } = {
     electronic: ['smartphones', 'laptops', 'automotive', 'motorcycle'],
     'skin-care': ['fragrances', 'skincare'],
@@ -23,8 +35,14 @@ const categories: { [key: string]: string[] } = {
     clothes: ['womens-dresses', 'mens-shirts', 'tops'],
 };
 
+/**
+ * Interface for defining sorting criteria.
+ */
 type SortCriteria = 'priceDesc' | 'priceAsc' | 'stockDesc' | 'discountDesc' | 'None';
 
+/**
+ * Component for filtering and sorting products.
+ */
 function SearchBar({ products, onFilteredProductsChange }: SearchBarProps) {
     const [searchTerm, setSearchTerm] = useState<string>('');
     const [minPrice, setMinPrice] = useState<number | null>(null);
@@ -32,6 +50,11 @@ function SearchBar({ products, onFilteredProductsChange }: SearchBarProps) {
     const [selectedCategory, setSelectedCategory] = useState<string>('');
     const [sortCriteria, setSortCriteria] = useState<SortCriteria>('None');
 
+    /**
+     * Handles category selection.
+     * 
+     * @param category - The selected category.
+     */
     const handleCategoryChange = (category: string) => {
         if (selectedCategory === category) {
             setSelectedCategory('');
@@ -40,6 +63,11 @@ function SearchBar({ products, onFilteredProductsChange }: SearchBarProps) {
         }
     };
 
+    /**
+     * Handles sort criteria change.
+     * 
+     * @param criteria - The selected sort criteria.
+     */
     const handleSortChange = (criteria: SortCriteria) => {
         if (sortCriteria === criteria) {
             setSortCriteria('None');
@@ -48,6 +76,9 @@ function SearchBar({ products, onFilteredProductsChange }: SearchBarProps) {
         }
     };
 
+    /**
+     * Filters products based on search term, price range, category, and sort criteria.
+     */
     const filterProducts = () => {
         let filteredProducts = products;
 

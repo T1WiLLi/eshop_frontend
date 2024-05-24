@@ -2,6 +2,11 @@ import { CartItem, Order } from "../interface/Orders";
 import { Product } from "../interface/product";
 import { User } from "../interface/user";
 
+/**
+ * Formats raw user data into a structured User object.
+ * @param data - The raw user data to be formatted.
+ * @returns The formatted user object.
+ */
 export function formatUser(data: any): User {
     return {
         id: data.id,
@@ -74,7 +79,12 @@ export function formatUser(data: any): User {
         role: data.role
     };
 }
-    
+
+/**
+ * Formats raw product data into a structured Product object.
+ * @param data - The raw product data to be formatted.
+ * @returns The formatted product object.
+ */
 export function formatProduct(data: any): Product {
   return {
     id: data.id,
@@ -102,6 +112,11 @@ export function formatProduct(data: any): Product {
   };
 }
 
+/**
+ * Formats raw order data into a structured Order object.
+ * @param data - The raw order data to be formatted.
+ * @returns The formatted order object.
+ */
 export function formatOrder(data: any): Order {
     const { id, products, userId } = data;
     let total = data.total;
