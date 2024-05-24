@@ -24,7 +24,6 @@ export function formatUser(data: any): User {
             color: data.hair.color,
             type: data.hair.type
         },
-        domain: data.domain,
         ip: data.ip,
         address: {
             address: data.address.address,
@@ -34,7 +33,9 @@ export function formatUser(data: any): User {
             coordinates: {
                 lat: data.address.coordinates.lat,
                 lng: data.address.coordinates.lng
-            }
+            },
+            stateCode: data.address.stateCode,
+            country: data.address.country
         },
         macAddress: data.macAddress,
         university: data.university,
@@ -54,7 +55,9 @@ export function formatUser(data: any): User {
                 coordinates: {
                     lat: data.company.address.coordinates.lat,
                     lng: data.company.address.coordinates.lng
-                }
+                },
+                stateCode: data.company.address.stateCode,
+                country: data.company.address.country
             },
             department: data.company.department,
             name: data.company.name,
@@ -67,38 +70,50 @@ export function formatUser(data: any): User {
             coin: data.crypto.coin,
             wallet: data.crypto.wallet,
             network: data.crypto.network
-        }
+        },
+        role: data.role
     };
 }
     
 export function formatProduct(data: any): Product {
-    return {
-        id: data.id,
-        title: data.title,
-        description: data.description,
-        price: data.price,
-        discountPercentage: data.discountPercentage,
-        rating: data.rating,
-        stock: data.stock,
-        brand: data.brand,
-        category: data.category,
-        thumbnail: data.thumbnail,
-        images: data.images
-    };
+  return {
+    id: data.id,
+    title: data.title,
+    description: data.description,
+    category: data.category,
+    price: data.price,
+    discountPercentage: data.discountPercentage,
+    rating: data.rating,
+    stock: data.stock,
+    tags: data.tags,
+    brand: data.brand,
+    sku: data.sku,
+    weight: data.weight,
+    dimensions: data.dimensions,
+    warrantyInformation: data.warrantyInformation,
+    shippingInformation: data.shippingInformation,
+    availabilityStatus: data.availabilityStatus,
+    reviews: data.reviews,
+    returnPolicy: data.returnPolicy,
+    minimumOrderQuantity: data.minimumOrderQuantity,
+    meta: data.meta,
+    images: data.images,
+    thumbnail: data.thumbnail,
+  };
 }
 
 export function formatOrder(data: any): Order {
-    const { id, products, total, userId } = data;
-    let discountedTotal = total;
-    let totalProducts = 0;
-    let totalQuantity = 0;
-
+    console.log(data);
+    const { id, products, userId } = data;
+    let total = data.total;
+    let discountedTotal = data.discountedTotal;
+    let totalProducts = data.totalProducts;
+    let totalQuantity = data.totalQuantity;
 
     products.forEach((product: CartItem) => {
-        const { quantity, price, discountedPrice } = product;
+        const { quantity } = product;
         totalProducts++;
         totalQuantity += quantity;
-        discountedTotal += discountedPrice ? discountedPrice * quantity : price * quantity;
     });
 
     return {
