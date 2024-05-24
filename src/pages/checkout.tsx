@@ -13,8 +13,23 @@ function Checkout() {
     const location = useLocation();
     const { products, addToBasket, handleIncrement, handleDecrement, handleRemove, calculateSubtotal } = useBasket();
 
-    const [address, setAddress] = useState<string>("");
-    const [userAddress, setUserAddress] = useState<Address | null>(null);
+    const [address, setAddress] = useState<Address>({
+        address: "",
+        city: "",
+        state: "",
+        stateCode: "",
+        postalCode: "",
+        coordinates: { lat: 0, lng: 0 },
+        country: ""
+    });
+
+    const [userAddress, setUserAddress] = useState<Address>();
+    const [addressSaved, setAddressSaved] = useState<boolean>(false);
+    const [useStoredAddress, setUseStoredAddress] = useState<boolean>(true);
+    const [includeGift, setIncludeGift] = useState<boolean>(false);
+    const [giftMessage, setGiftMessage] = useState<string>("");
+    const [deliverySpeed, setDeliverySpeed] = useState<string>("standard");
+    const [deliveryDate, setDeliveryDate] = useState<Date[]>([]);
 
     const isUserConnected = !!Cookie.getToken();
 
@@ -33,6 +48,31 @@ function Checkout() {
         fetchUser();
     }, []);
 
+    useEffect(() => {
+        const calculateDeliveryDates = () => {
+            const getDeliveryDate = (speed: string) => {
+                const today = new Date();
+                const date = [];
+
+                if (speed === 'standard') {
+                    date.push(new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000));
+                } else if (speed === 'express') {
+                    date.push(new Date(today.getTime() + 3 * 24 * 60 * 60 * 1000));
+                } else if (speed === 'overnight') {
+                    date.push(new Date(today.getTime() + 1 * 24 * 60 * 60 * 1000));
+                }
+
+                return date;
+            };
+
+            const date = getDeliveryDate(deliverySpeed);
+            setDeliveryDate(() => date);
+        };
+
+        calculateDeliveryDates();
+    }, [deliverySpeed]);
+
+
     const subtotal = calculateSubtotal();
     const taxRate = 0.15;
     const taxPercentage = taxRate * 100;
@@ -43,8 +83,28 @@ function Checkout() {
         navigate("/login");
     };
 
-    const handleAddressChange = (e: { target: { value: SetStateAction<string>; }; }) => {
-        setAddress(e.target.value);
+    const handleAddressChange = (e: { target: { name: any; value: any; }; }) => {
+        const { name, value } = e.target;
+        setAddress((prevAddress) => ({
+            ...prevAddress,
+            [name]: value
+        }));
+    };
+
+    const handleSaveAddress = () => {
+        setAddressSaved(true);
+    };
+
+    const handleGiftOptionChange = (e: { target: { checked: boolean | ((prevState: boolean) => boolean); }; }) => {
+        setIncludeGift(e.target.checked);
+    };
+
+    const handleGiftMessageChange = (e: { target: { value: SetStateAction<string>; }; }) => {
+        setGiftMessage(e.target.value);
+    };
+
+    const handleDeliverySpeedChange = (e: { target: { value: SetStateAction<string>; }; }) => {
+        setDeliverySpeed(e.target.value);
     };
 
     if (!isUserConnected) {
@@ -99,25 +159,97 @@ function Checkout() {
                     <Form className="mt-4">
                         <Accordion>
                             <Accordion.Item eventKey="0">
-                                <Accordion.Header>New Address</Accordion.Header>
+                                <Accordion.Header>Custom Address</Accordion.Header>
                                 <Accordion.Body>
-                                    <Form.Group className="mb-3" controlId="formNewAddress">
-                                        <Form.Label>Address</Form.Label>
-                                        <Form.Control type="text" placeholder="Enter your address" value={address} onChange={handleAddressChange} />
+                                    <Form.Group className="mb-3" controlId="formStreet">
+                                        <Form.Label>Street Address</Form.Label>
+                                        <Form.Control type="text" placeholder="Enter street address" name="address" value={address?.address} onChange={handleAddressChange} />
                                     </Form.Group>
+                                    <Form.Group className="mb-3" controlId="formCity">
+                                        <Form.Label>City</Form.Label>
+                                        <Form.Control type="text" placeholder="Enter city" name="city" value={address?.city} onChange={handleAddressChange} />
+                                    </Form.Group>
+                                    <Form.Group className="mb-3" controlId="formState">
+                                        <Form.Label>State</Form.Label>
+                                        <Form.Control type="text" placeholder="Enter state" name="state" value={address?.state} onChange={handleAddressChange} />
+                                    </Form.Group>
+                                    <Form.Group className="mb-3" controlId="formPostalCode">
+                                        <Form.Label>Postal Code</Form.Label>
+                                        <Form.Control type="text" placeholder="Enter postal code" name="postalCode" value={address?.postalCode} onChange={handleAddressChange} />
+                                    </Form.Group>
+                                    <Form.Group className="mb-3" controlId="formCountry">
+                                        <Form.Label>Country</Form.Label>
+                                        <Form.Control type="text" placeholder="Enter country" name="country" value={address?.country} onChange={handleAddressChange} />
+                                    </Form.Group>
+                                    <Button variant="primary" onClick={handleSaveAddress}>Save Address</Button>
+                                    {addressSaved && <p className="text-success">Address saved successfully.</p>}
                                 </Accordion.Body>
                             </Accordion.Item>
                             <Accordion.Item eventKey="1">
                                 <Accordion.Header>Use Stored Address</Accordion.Header>
                                 <Accordion.Body>
-                                    {isUserConnected ? (
-                                        userAddress ? (
-                                            <p>{userAddress.address}, {userAddress.city}, {userAddress.state}, {userAddress.postalCode}</p>
-                                        ) : (
-                                            <p>No address found. Please update your address in your profile.</p>
-                                        )
-                                    ) : (
-                                        <p>Please log in to access your stored address.</p>
+                                    <Form.Group className="mb-3" controlId="useStoredAddress">
+                                        <Form.Check
+                                            type="checkbox"
+                                            label="Use stored address"
+                                            checked={useStoredAddress}
+                                            onChange={() => setUseStoredAddress(!useStoredAddress)}
+                                        />
+                                    </Form.Group>
+                                    {userAddress && useStoredAddress && (
+                                        <div>
+                                            <p><strong>Street:</strong> {userAddress.address}</p>
+                                            <p><strong>City:</strong> {userAddress.city}</p>
+                                            <p><strong>State:</strong> {userAddress.state}</p>
+                                            <p><strong>Postal Code:</strong> {userAddress.postalCode}</p>
+                                            <p><strong>Country:</strong> {userAddress.country}</p>
+                                        </div>
+                                    )}
+                                </Accordion.Body>
+                            </Accordion.Item>
+                            <Accordion.Item eventKey="2">
+                                <Accordion.Header>Gift Option</Accordion.Header>
+                                <Accordion.Body>
+                                    <Form.Group className="mb-3" controlId="giftOption">
+                                        <Form.Check
+                                            type="checkbox"
+                                            label="Include a gift card"
+                                            checked={includeGift}
+                                            onChange={handleGiftOptionChange}
+                                        />
+                                    </Form.Group>
+                                    {includeGift && (
+                                        <>
+                                            <Form.Group className="mb-3" controlId="giftMessage">
+                                                <Form.Label>Gift Message</Form.Label>
+                                                <Form.Control
+                                                    as="textarea"
+                                                    rows={3}
+                                                    placeholder="Add a message for the gift recipient"
+                                                    value={giftMessage}
+                                                    onChange={handleGiftMessageChange}
+                                                />
+                                            </Form.Group>
+                                        </>
+                                    )}
+                                </Accordion.Body>
+                            </Accordion.Item>
+                            <Accordion.Item eventKey="3">
+                                <Accordion.Header>Delivery Speed</Accordion.Header>
+                                <Accordion.Body>
+                                    <Form.Group className="mb-3" controlId="deliverySpeed">
+                                        <Form.Label>Select Delivery Speed</Form.Label>
+                                        <Form.Select value={deliverySpeed} onChange={handleDeliverySpeedChange}>
+                                            <option value="standard">Standard (Free)</option>
+                                            <option value="express">Express (2% | +${(total * 0.02).toFixed(2)})</option>
+                                            <option value="overnight">Overnight (4% | +${(total * 0.05).toFixed(2)})</option>
+                                        </Form.Select>
+                                    </Form.Group>
+                                    {deliveryDate.length > 0 && (
+                                        <p>
+                                            Possible Delivery Date(s):{' '}
+                                            {deliveryDate.map((date) => date.toLocaleDateString()).join(', ')}
+                                        </p>
                                     )}
                                 </Accordion.Body>
                             </Accordion.Item>
@@ -134,6 +266,7 @@ function Checkout() {
             )}
         </Container>
     );
+
 }
 
 export default Checkout;
