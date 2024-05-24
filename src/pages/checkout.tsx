@@ -1,18 +1,20 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { useBasket } from "../context/BasketContext";
-import { useEffect, useState } from "react";
+import { SetStateAction, useEffect, useState } from "react";
 import { Cookie } from "../lib/Cookie";
-import { Container, Row, Col, ListGroup, Button, Card, Form } from "react-bootstrap";
+import { Container, Row, Col, ListGroup, Button, Card, Form, Accordion } from "react-bootstrap";
 import NotFound from "./notFound";
 import "../styles/pages/checkout.css";
+import { Address } from "../interface/user";
+import { Auth } from "../api/auth";
 
 function Checkout() {
     const navigate = useNavigate();
     const location = useLocation();
     const { products, addToBasket, handleIncrement, handleDecrement, handleRemove, calculateSubtotal } = useBasket();
 
-    const [address, setAddress] = useState("");
-
+    const [address, setAddress] = useState<string>("");
+    const [userAddress, setUserAddress] = useState<Address | null>(null);
 
     const isUserConnected = !!Cookie.getToken();
 
@@ -21,10 +23,19 @@ function Checkout() {
             addToBasket(location.state.product);
             handleDecrement(location.state.product.id);
         }
+        const fetchUser = async () => {
+            let token = Cookie.getToken();
+            if (token) {
+                const user = await Auth.getInstance().getCurrentUser(token);
+                setUserAddress(user.address);
+            }
+        }
+        fetchUser();
     }, []);
 
     const subtotal = calculateSubtotal();
-    const taxRate = 0.08;
+    const taxRate = 0.15;
+    const taxPercentage = taxRate * 100;
     const taxes = subtotal * taxRate;
     const total = subtotal + taxes;
 
@@ -32,7 +43,7 @@ function Checkout() {
         navigate("/login");
     };
 
-    const handleAddressChange = (e: any) => {
+    const handleAddressChange = (e: { target: { value: SetStateAction<string>; }; }) => {
         setAddress(e.target.value);
     };
 
@@ -76,7 +87,7 @@ function Checkout() {
                                 <Col className="text-end"><p>${subtotal.toFixed(2)}</p></Col>
                             </Row>
                             <Row>
-                                <Col><p>Taxes:</p></Col>
+                                <Col><p>Taxes ({taxPercentage}%):</p></Col>
                                 <Col className="text-end"><p>${taxes.toFixed(2)}</p></Col>
                             </Row>
                             <Row>
@@ -86,31 +97,35 @@ function Checkout() {
                         </Card.Body>
                     </Card>
                     <Form className="mt-4">
-                        <Form.Group className="mb-3" controlId="formAddress">
-                            <Form.Label>Address</Form.Label>
-                            <Form.Control type="text" placeholder="Enter your address" value={address} onChange={handleAddressChange} />
+                        <Accordion>
+                            <Accordion.Item eventKey="0">
+                                <Accordion.Header>New Address</Accordion.Header>
+                                <Accordion.Body>
+                                    <Form.Group className="mb-3" controlId="formNewAddress">
+                                        <Form.Label>Address</Form.Label>
+                                        <Form.Control type="text" placeholder="Enter your address" value={address} onChange={handleAddressChange} />
+                                    </Form.Group>
+                                </Accordion.Body>
+                            </Accordion.Item>
+                            <Accordion.Item eventKey="1">
+                                <Accordion.Header>Use Stored Address</Accordion.Header>
+                                <Accordion.Body>
+                                    {isUserConnected ? (
+                                        userAddress ? (
+                                            <p>{userAddress.address}, {userAddress.city}, {userAddress.state}, {userAddress.postalCode}</p>
+                                        ) : (
+                                            <p>No address found. Please update your address in your profile.</p>
+                                        )
+                                    ) : (
+                                        <p>Please log in to access your stored address.</p>
+                                    )}
+                                </Accordion.Body>
+                            </Accordion.Item>
+                        </Accordion>
+                        <Form.Group className="mb-3 mt-4" controlId="formDeliveryMessage">
+                            <Form.Label>Delivery Message</Form.Label>
+                            <Form.Control as="textarea" rows={3} placeholder="Add a delivery message (optional)" />
                         </Form.Group>
-                        <fieldset>
-                            <Form.Group as={Row} className="mb-3" controlId="formDeliveryDate">
-                                <Form.Label as="legend" column sm={4}>Delivery Date</Form.Label>
-                                <Col sm={8}>
-                                    <Form.Check
-                                        type="radio"
-                                        label="Tomorrow"
-                                        name="deliveryDate"
-                                        id="deliveryTomorrow"
-                                        value="tomorrow"
-                                    />
-                                    <Form.Check
-                                        type="radio"
-                                        label="Day after tomorrow"
-                                        name="deliveryDate"
-                                        id="deliveryDayAfterTomorrow"
-                                        value="dayAfterTomorrow"
-                                    />
-                                </Col>
-                            </Form.Group>
-                        </fieldset>
                         <Button variant="success" className="mt-4">Proceed to Payment</Button>
                     </Form>
                 </>

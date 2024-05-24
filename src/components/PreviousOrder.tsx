@@ -91,7 +91,7 @@ const PreviousOrders = () => {
                             <ul>
                                 {order.products.map((product) => (
                                     <li key={product.id} className="product-item">
-                                        {product.title} (Quantity: {product.quantity}, Price: {formatCurrency(product.price)})
+                                        {product.title} (Quantity: {product.quantity}, Price: {formatCurrency(product.price * product.quantity)})
                                     </li>
                                 ))}
                             </ul>

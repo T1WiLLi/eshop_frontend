@@ -103,7 +103,6 @@ export function formatProduct(data: any): Product {
 }
 
 export function formatOrder(data: any): Order {
-    console.log(data);
     const { id, products, userId } = data;
     let total = data.total;
     let discountedTotal = data.discountedTotal;
