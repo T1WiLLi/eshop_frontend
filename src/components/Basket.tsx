@@ -2,14 +2,41 @@ import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import { useBasket } from "../context/BasketContext";
 import { Product } from "../interface/product";
 import "../styles/components/basket.css";
+/**
+ * Represents a product displayed in the basket.
+ */
 interface ProductBasketProps {
+    /**
+     * The product to be displayed.
+     */
     product: Product;
+    /**
+     * The quantity of the product in the basket.
+     */
     amountOfProduct: number;
+    /**
+     * Function to handle incrementing the quantity of the product.
+     * 
+     * @param productId - The ID of the product.
+     */
     onIncrement: (productId: number) => void;
+    /**
+     * Function to handle decrementing the quantity of the product.
+     * 
+     * @param productId - The ID of the product.
+     */
     onDecrement: (productId: number) => void;
+    /**
+     * Function to handle removing the product from the basket.
+     * 
+     * @param productId - The ID of the product.
+     */
     onRemove: (productId: number) => void;
 }
 
+/**
+ * Represents the shopping basket.
+ */
 function Basket() {
     const { products, handleIncrement, handleDecrement, handleRemove, calculateSubtotal, handleCheckout } = useBasket();
 
@@ -60,6 +87,9 @@ function Basket() {
 
 // Create an item template that will be mapped to the basket-items
 
+/**
+ * Represents a product displayed in the basket.
+ */
 const ProductBasket: React.FC<ProductBasketProps> = ({
     product,
     amountOfProduct,

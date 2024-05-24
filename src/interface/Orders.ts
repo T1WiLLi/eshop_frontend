@@ -64,12 +64,60 @@ export interface CartItem {
  * The Order interface represents an order made by a user.
  */
 export interface Order {
+    /**
+     * The unique identifier for the order.
+     * 
+     * @type {number}
+     */
     id: number;
+
+    /**
+     * The array of CartItem objects representing the products in the order.
+     * 
+     * @type {CartItem[]}
+     */
     products: CartItem[];
+
+    /**
+     * The total price of the order before any discounts are applied.
+     * 
+     * @type {number}
+     */
     total: number;
+
+    /**
+     * The total price of the order after discounts are applied.
+     * 
+     * @type {number}
+     */
     discountedTotal: number;
+
+    /**
+     * The unique identifier of the user who made the order.
+     * 
+     * @type {number}
+     */
     userId: number;
+
+    /**
+     * The total number of products in the order.
+     * 
+     * @type {number}
+     */
     totalProducts: number;
+
+    /**
+     * The total quantity of items in the order.
+     * 
+     * @type {number}
+     */
     totalQuantity: number;
+
+    /**
+     * The date and time when the order was made.
+     * 
+     * @type {string}
+     */
     purchaseDate: string;
 }
+
