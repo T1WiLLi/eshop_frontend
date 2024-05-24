@@ -1,0 +1,33 @@
+.checkout-container {
+    margin-top: 20px;
+    margin-bottom: 50px;
+}
+
+.checkout-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.checkout-container .list-group-item {
+    margin-bottom: 10px;
+}
+
+.checkout-container .btn {
+    margin-left: 5px;
+}
+
+.checkout-container .card {
+    padding: 20px;
+}
+
+.checkout-container .card-body {
+    padding: 10px;
+}
+
+.checkout-container .card-body .row {
+    margin-bottom: 10px;
+}
+
+.checkout-container .btn-block {
+    width: 100%;
+}

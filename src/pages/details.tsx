@@ -20,7 +20,7 @@ const Detail = () => {
     useEffect(() => {
         const fetchProduct = async () => {
             try {
-                const fetcher = new Fetcher();
+                const fetcher = Fetcher.getInstance();
                 if (productString) {
                     const productId = parseInt(productString, 10);
                     if (!isNaN(productId)) {
@@ -125,6 +125,36 @@ const Detail = () => {
                     ) : (
                         <p>No images available.</p>
                     )}
+                </Col>
+            </Row>
+            <Row className="mt-4">
+                <Col>
+                    <h5>Customer Reviews</h5>
+                    {product.reviews.length > 0 ? (
+                        product.reviews.map((review, index) => (
+                            <div key={index} className="review-item mb-4">
+                                <div className="d-flex align-items-center">
+                                    <div className="me-2">
+                                        {renderStars(review.rating)}
+                                    </div>
+                                    <div className="fw-bold">{review.reviewerName}</div>
+                                </div>
+                                <p>{review.comment}</p>
+                            </div>
+                        ))
+                    ) : (
+                        <p>No reviews available.</p>
+                    )}
+                </Col>
+            </Row>
+            <Row className="mt-4">
+                <Col>
+                    <h5>Returns Policy</h5>
+                    <p>{product.returnPolicy}</p>
+                </Col>
+                <Col>
+                    <h5>Warranty Information</h5>
+                    <p>{product.warrantyInformation}</p>
                 </Col>
             </Row>
         </Container>
