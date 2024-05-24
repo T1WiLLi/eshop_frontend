@@ -74,7 +74,7 @@ export class Auth { // Singleton
 
     async refreshSession(expiresInMins: number = 120): Promise<void> {
         if (!this.token) {
-            throw new Error('No token available. Please login first.');
+            return;
         }
 
         try {
@@ -88,8 +88,6 @@ export class Auth { // Singleton
             const data = response.data;
             this.token = data.token;
             new Cookie(Cookie.getToken()).refreshExpiry();
-        } catch (error: any) {
-            throw new Error(`Error refreshing session: ${error.message}`);
-        }
+        } catch (error: any) {}
     }
 }

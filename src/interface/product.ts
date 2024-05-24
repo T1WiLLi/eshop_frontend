@@ -1,81 +1,45 @@
-/**
- * The Product interface represents a product in the system.
- */
 export interface Product {
-    /**
-     * The unique identifier for the product.
-     * 
-     * @type {number}
-     */
-    id: number;
+  id: number;
+  title: string;
+  description: string;
+  category: string;
+  price: number;
+  discountPercentage: number;
+  rating: number;
+  stock: number;
+  tags: string[];
+  brand: string;
+  sku: string;
+  weight: number;
+  dimensions: Dimensions;
+  warrantyInformation: string;
+  shippingInformation: string;
+  availabilityStatus: string;
+  reviews: Review[];
+  returnPolicy: string;
+  minimumOrderQuantity: number;
+  meta: Meta;
+  images: string[];
+  thumbnail: string;
+}
 
-    /**
-     * The title or name of the product.
-     * 
-     * @type {string}
-     */
-    title: string;
+export interface Meta {
+  createdAt: string;
+  updatedAt: string;
+  barcode: string;
+  qrCode: string;
+}
 
-    /**
-     * A detailed description of the product.
-     * 
-     * @type {string}
-     */
-    description: string;
+export interface Review {
+  rating: number;
+  comment: string;
+  date: string;
+  reviewerName: string;
+  reviewerEmail: string;
+}
 
-    /**
-     * The price of the product.
-     * 
-     * @type {number}
-     */
-    price: number;
-
-    /**
-     * The discount percentage applied to the product.
-     * 
-     * @type {number}
-     */
-    discountPercentage: number;
-
-    /**
-     * The rating of the product, typically out of 5.
-     * 
-     * @type {number}
-     */
-    rating: number;
-
-    /**
-     * The number of units available in stock.
-     * 
-     * @type {number}
-     */
-    stock: number;
-
-    /**
-     * The brand of the product.
-     * 
-     * @type {string}
-     */
-    brand: string;
-
-    /**
-     * The category to which the product belongs.
-     * 
-     * @type {string}
-     */
-    category: string;
-
-    /**
-     * The URL of the product's thumbnail image.
-     * 
-     * @type {string}
-     */
-    thumbnail: string;
-
-    /**
-     * An array of URLs for images of the product.
-     * 
-     * @type {string[]}
-     */
-    images: string[];
+export interface Dimensions {
+  width: number;
+  height: number;
+  depth: number;
 }

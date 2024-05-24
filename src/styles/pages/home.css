@@ -22,11 +22,13 @@
 }
 
 .landing-section__background-image img {
+    position: relative;
     width: 100%;
     height: 100%;
     object-fit: cover;
     background-attachment: fixed;
 }
+
 
 .landing-section__background-image::after {
     content: "";
@@ -35,7 +37,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: radial-gradient(circle, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.7) 100%);
+    background: rgba(0, 0, 0, 0.4);
 }
 
 .landing-section__content {

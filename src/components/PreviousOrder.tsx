@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import { Product } from "../interface/product";
 import Card from "react-bootstrap/esm/Card";
 import ListGroup from "react-bootstrap/esm/ListGroup";
 import Button from "react-bootstrap/esm/Button";
 import "../styles/components/previousOrder.css";
 import { CartItem, Order } from "../interface/Orders";
 import { Fetcher } from "../api/fetch";
+import { Product } from "../interface/product";
 
 const PreviousOrders = () => {
     const [previousOrders, setPreviousOrders] = useState<Order[]>([]);
@@ -21,17 +21,21 @@ const PreviousOrders = () => {
                 const orders: Order[] = cartResponse.map((cart: Order, index: number) => {
                     const products: CartItem[] = cart.products.map((product) => {
                         const matchingProduct = productResponse.find((p: Product) => p.id === product.id);
+                        if (!matchingProduct) {
+                            console.warn(`Product with ID ${product.id} not found`);
+                            return null;
+                        }
                         return {
-                            id: matchingProduct!.id,
-                            title: matchingProduct!.title,
-                            price: matchingProduct!.price,
+                            id: matchingProduct.id,
+                            title: matchingProduct.title,
+                            price: matchingProduct.price,
                             quantity: product.quantity,
                             total: product.total,
-                            discountPercentage: matchingProduct!.discountPercentage,
+                            discountPercentage: matchingProduct.discountPercentage,
                             discountedPrice: product.discountedPrice,
-                            thumbnail: matchingProduct!.thumbnail,
+                            thumbnail: matchingProduct.thumbnail,
                         };
-                    });
+                    }).filter(item => item !== null) as CartItem[];
 
                     const purchaseDate = new Date(
                         currentDate.getTime() - (cartResponse.length - index) * 24 * 60 * 60 * 1000
@@ -57,6 +61,11 @@ const PreviousOrders = () => {
         setShowAll(!showAll);
     };
 
+    const formatCurrency = (value?: number) => {
+        return value !== undefined ? value.toLocaleString('en-US', { style: 'currency', currency: 'USD' }) : 'N/A';
+    };
+
+
     return (
         <Card className="mb-3 previous-orders-card">
             <Card.Header className="previous-orders-header">Previous Orders</Card.Header>
@@ -68,10 +77,10 @@ const PreviousOrders = () => {
                                 <strong>Order ID:</strong> {order.id},
                             </div>
                             <div className="order-detail">
-                                <strong>Total:</strong> {order.total.toLocaleString('en-US', { style: 'currency', currency: 'USD' })},
+                                <strong>Total:</strong> {formatCurrency(order.total)},
                             </div>
                             <div className="order-detail">
-                                <strong>Discounted Total:</strong> {order.discountedTotal.toLocaleString('en-US', { style: 'currency', currency: 'USD' })},
+                                <strong>Discounted Total:</strong> {formatCurrency(order.discountedTotal)},
                             </div>
                             <div className="order-detail">
                                 <strong>Purchase Date:</strong> {new Date(order.purchaseDate).toLocaleDateString()}
@@ -82,7 +91,7 @@ const PreviousOrders = () => {
                             <ul>
                                 {order.products.map((product) => (
                                     <li key={product.id} className="product-item">
-                                        {product.title} (Quantity: {product.quantity}, Price: {product.discountedPrice.toLocaleString('en-US', { style: 'currency', currency: 'USD' })})
+                                        {product.title} (Quantity: {product.quantity}, Price: {formatCurrency(product.price * product.quantity)})
                                     </li>
                                 ))}
                             </ul>

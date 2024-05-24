@@ -6,15 +6,16 @@ import "../styles/pages/shop.css";
 import { Container } from "react-bootstrap";
 import SearchBar from "../components/SearchBar";
 
-type CategoryKey = 'electronic' | 'skin-care' | 'home-decoration' | 'groceries' | 'accessories' | 'clothes';
+type CategoryKey = 'electronic' | 'skin-care' | 'home' | 'groceries' | 'accessories' | 'clothes' | 'vehicule';
 
 const categories: Record<CategoryKey, string[]> = {
-    electronic: ['smartphones', 'laptops', 'automotive', 'motorcycle'],
-    'skin-care': ['fragrances', 'skincare'],
-    'home-decoration': ['home-decoration', 'furniture', 'lighting'],
+    electronic: ['smartphones', 'laptops', 'mobile-accessories', 'tablets'],
+    'skin-care': ['fragrances', 'skincare', 'beauty', 'skin-care'],
+    home: ['home-decoration', 'furniture', 'lighting', 'kitchen-accessories'],
     groceries: ['groceries'],
     accessories: ['mens-watches', 'womens-watches', 'womens-bags', 'womens-jewellery', 'sunglasses'],
-    clothes: ['womens-dresses', 'mens-shirts', 'tops']
+    clothes: ['womens-dresses', 'mens-shirts', 'tops'],
+    vehicule: ['vehicle', 'motorcycle', 'automotivev']
 };
 
 function Shop() {
@@ -24,7 +25,7 @@ function Shop() {
     useEffect(() => {
         async function fetchData() {
             try {
-                const productsData = await new Fetcher().fetchAllProduct();
+                const productsData = await Fetcher.getInstance().fetchAllProduct();
                 setProducts(productsData);
 
                 // Initialize filteredProducts with the fetched products grouped by category

@@ -40,9 +40,9 @@ function CategoryGrid({ products }: CategoryGridProps) {
                         </Button>
                     </Col>
                 </Row>
-                <div className="container-fluid d-flex gap-2 product-row-holder">
+                <div className="container-fluid d-flex product-row-holder">
                     {products.map((product, index) => (
-                        <Col key={product.id} className="product-col">
+                        <Col key={product.id} className="product-col mx-1">
                             {(index < initialProductCount || isExpanded) && <ProductTemplate key={product.id} product={product} />}
                         </Col>
                     ))}
