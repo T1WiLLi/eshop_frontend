@@ -1,7 +1,7 @@
 import { Container, Row, Col } from "react-bootstrap";
 import "../styles/components/footer.css";
 import { Link } from "react-router-dom";
-
+//this is a test commut
 function Footer() {
     const icons: string[] = [
         "facebook-f",
