@@ -7,13 +7,18 @@
   color: #fff;
 }
 
+.footer a, .footer p {
+  color: #bbb;
+}
+
 .footer__header {
   margin-bottom: 20px;
 }
 
 .footer__header h2 {
-  font-size: 24px;
+  font-size: 28px;
   font-weight: bold;
+  text-decoration: underline;
 }
 
 .footer__about h3,
@@ -33,6 +38,10 @@
   margin-right: 10px;
 }
 
+.footer__links {
+  text-align: center;
+}
+
 .footer__links ul {
   list-style: none;
   padding: 0;
@@ -44,7 +53,6 @@
 }
 
 .footer__links ul li a {
-  color: #fff;
   text-decoration: none;
 }
 
@@ -53,6 +61,7 @@
 }
 
 .footer__copyright {
+  color: #fff !important;
   float: left;
   font-family: var(--title-font);
 }
