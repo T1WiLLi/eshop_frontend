@@ -33,7 +33,7 @@ We welcome contributions from everyone. To contribute to the project, please fol
 10. Finally, submit a **pull request** (PR) by navigating to your forked repository on GitHub and clicking the "New pull request" button. Fill out the PR template with details about your changes.
 
 ## Version Control
-   1. Node.js 10.3.0
+   1. Node.js 20.11.0
    2. Vite ^5.2.0
    3. Typescript ^5.2.2
 
