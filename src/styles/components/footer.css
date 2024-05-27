@@ -48,10 +48,6 @@
   margin: 0;
 }
 
-.footer__links ul li {
-  margin-bottom: 5px;
-}
-
 .footer__links ul li a {
   text-decoration: none;
 }
