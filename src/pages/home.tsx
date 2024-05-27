@@ -9,6 +9,9 @@ const LandingSection = () => {
             <div className="landing-section__content">
                 <h1 className="landing-section__header">Welcome to Our Store</h1>
                 <p className="landing-section__sub-text">Find the best products here</p>
+                <a href="/shop" className="shop-now-link">
+                    <button className="shop-now-button mt-4">Shop Now</button>
+                </a>
             </div>
         </div>
     );
