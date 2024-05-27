@@ -2,6 +2,7 @@ import { Card, Button } from "react-bootstrap";
 import { Product } from "../interface/product";
 import { useNavigate } from "react-router-dom";
 import { ReactNode } from "react";
+import "../styles/components/productTemplate.css";
 
 /**
  * Props for the ProductTemplate component.
