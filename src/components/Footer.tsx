@@ -1,7 +1,6 @@
 import { Container, Row, Col } from "react-bootstrap";
 import "../styles/components/footer.css";
 import { Link } from "react-router-dom";
-
 function Footer() {
     const icons: string[] = [
         "facebook-f",
@@ -37,7 +36,7 @@ function Footer() {
                             </p>
                         </div>
                     </Col>
-                    <Col md={4}>
+                    <Col md={3}>
                         <div className="footer__links">
                             <h3>Links</h3>
                             <ul>
@@ -56,6 +55,7 @@ function Footer() {
                             </ul>
                         </div>
                     </Col>
+                    <Col md={1}></Col>
                     <Col md={4}>
                         <div className="footer__subscription">
                             <h3>Subscribe</h3>
@@ -73,7 +73,7 @@ function Footer() {
                     </Col>
                 </Row>
                 <Row>
-                    <Col md={12} className="d-flex pb-3">
+                    <Col md={12} className="footer-copyright d-flex pb-3">
                         <p className="footer__copyright mb-0 d-flex align-items-center">
                             &copy; William Beaudin 2024
                         </p>

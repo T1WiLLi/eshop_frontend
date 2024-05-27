@@ -1,8 +1,7 @@
 /* productTemplate.css */
 .product-card {
     width: 280px;
-    min-height: 420px;
-    max-height: 420px;
+    height: 440px !important;
     margin-bottom: 20px;
     border: 1px solid #ddd;
     border-radius: 8px;
@@ -11,6 +10,7 @@
     overflow: hidden;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
 }
 
 .product-card-header {
@@ -31,6 +31,7 @@
 }
 
 .product-card .card-body {
+    flex: 1;
     padding: 15px;
     display: flex;
     flex-direction: column;
@@ -40,19 +41,22 @@
 .product-card .card-title {
     font-size: 18px;
     margin-bottom: 10px;
+    flex-shrink: 0;
 }
 
 .product-card .card-text {
     font-size: 14px;
     margin-bottom: 5px;
+    flex-grow: 1;
 }
 
 .product-card-footer {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    align-items: left;
+    align-items: flex-start;
     margin-top: 10px;
+    flex-shrink: 0;
 }
 
 .product-card-footer div:last-child {
